@@ -1,0 +1,67 @@
+Version 0.3
+- Massive backend overhaul: now uses local SQLite database.
+- Search is on the wordpage now.
+- Phonemes now have features; words have features instead of type/subtype.
+  You can import and export features independently from the dictionary.
+- Discovered and killed insideous pointer-related logic error that may have 
+  caused various phoneme problems in newly-created dictionaries that had not
+  yet been loaded from a savefile.  But then I rewrote the backend to not use
+  pointers anyway, so uh.  It was still something I fixed.
+- Phonotactics can now be specified using natural classes.
+- There is now a button for translating XSAMPA into IPA on the phonemes tab.
+  (Lookup table compiled by Zoris and borrowed from his ConlangIDE code.)
+- You can now tell CD to override Windows' native codepage and import CSV files
+  using UTF-8.
+- Bloated last tab has been reorganized into more traditional menu system.
+- You can now set the default path that CD will try to open files in.
+- You can now specify a file to open on the command line.
+
+Version 0.2
+5/24/10
+- Save/Load tab is smarter about suggesting files to save to.
+- Phonotactics will now ignore specified characters.
+- Type is now shown on the wordlist.
+- Slightly context-sensitive phonology parsing implemented.
+- Application font can now be set on the last page (restart to actually see changes).
+  Default is DejaVu Sans.
+- Manually adding <squareBrackets /> to the .cdic file (inside the top-level <conlang> tag)
+  will cause the dictionary to use square brackets instead of slashes.
+
+5/20/10
+- Wordlists can now be imported from Lexique Pro.
+
+5/11/10
+- Words input from text files will now accept punctuation and spaces in the word
+  field.
+- Multiple phonemes and words can be selected (with shift) and manipulated simultaneously.
+- Edit phonology dialog will allow you to edit phonology when phonotactics are turned
+  off.
+
+3/13/10
+- Deleting phonemes bug fixed for reals now.
+- Words generated with no phonology will now be analyzed as CVCV(C).  Yeah, it sucks.
+
+2/26/10
+- Wordlists can now be loaded from or saved to a text or CSV file.
+- Partial wordlists can now be loaded from existing dictionary files.
+- Language name is now stored in savefile (set it on the last tab)
+- It is now possible to opt out of phonotactical restrictions on the phonotactics
+  page.
+- Sanity check: Attempting to generate more than 1000 clusters on the phonotactics
+  page now results in an error message (if you need more than about 500, you're probably
+  better off just opting out of phonotactics restrictions anyway).
+- The dialog for choosing sequences of phonemes has been optimized for displaying
+  larger number numbers of sequences (YMMV based on your screen size).
+- Deleting phonemes and suprasegmentals that are referenced in many places will now result
+  in all references being properly removed rather than a crash.
+
+(First update)
+- Suprasegmentals tab added.
+- Phonotactics tab added.
+- A couple buttons on the words tab are now properly disabled in circumstances
+  where clicking them would cause a crash.
+- Phonological representations are now loaded correctly.
+- Problem where changing the spelling of a word did not change its place in the
+  list was fixed.
+- It is now possible to specify an alphabetic order for phonemes.
+- Savefile format is now in XML.
