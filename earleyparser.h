@@ -35,6 +35,7 @@ class EarleyParser  {
   public:
     EarleyParser ();
     void setRules (QList<Rule>);
+    void setIgnored (QString);
     
     TreeNode parse (QString);
     
@@ -44,6 +45,7 @@ class EarleyParser  {
     QList<Rule> nonterminals;
     QStringList preterminals;
     QMap<QString, QStringList> terminals;
+    QString ignored;
     QList< QList<ChartItem> > chart;
     
     TreeNode getTreeNode (int, int);

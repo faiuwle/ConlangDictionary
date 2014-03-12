@@ -52,6 +52,7 @@ WordPage::WordPage ()  {
   naturalClassBox->setSizeAdjustPolicy (QComboBox::AdjustToContents);
   naturalClassBox->addItem ("Any Word Type");
   languageBox = new QComboBox;
+  languageBox->setSizeAdjustPolicy (QComboBox::AdjustToContents);
   languageBox->addItem ("English");
   searchLayout = new QHBoxLayout;
   searchLayout->addWidget (searchButton);
@@ -208,7 +209,9 @@ void WordPage::setDB (CDICDatabase database)  {
   dirty = true;
   
   languageBox->clear ();
-  languageBox->addItem (db.getValue (LANGUAGE_NAME));
+  if (db.getValue (LANGUAGE_NAME) == "")
+    languageBox->addItem ("Conlang");
+  else languageBox->addItem (db.getValue (LANGUAGE_NAME));
   languageBox->addItem ("English");
   
   updateModels ();
@@ -243,6 +246,14 @@ void WordPage::parseWordlist ()  {
     parseWord (idList[x]);
   
   emit parsingFinished ();
+}
+
+void WordPage::setLanguageName (QString language)  {
+  languageBox->clear ();
+  if (language == "")
+    languageBox->addItem ("Conlang");
+  else languageBox->addItem (language);
+  languageBox->addItem ("English");
 }
 
 void WordPage::setChanged ()  {
@@ -441,6 +452,7 @@ void WordPage::parseWord (int id)  {
 
     QList<Rule> ruleList = db.getParsingGrammar ();
     parser.setRules (ruleList);
+    parser.setIgnored (db.getValue (IGNORED_CHARACTERS));
     
 //    QTextStream terminal (stdout);
     

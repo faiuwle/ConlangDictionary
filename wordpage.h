@@ -39,6 +39,7 @@ class WordPage : public QWidget  {
   public slots:
     void setDirty ();
     void parseWordlist ();
+    void setLanguageName (QString);
     
   private slots:
     void setChanged ();

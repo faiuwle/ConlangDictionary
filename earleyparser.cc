@@ -65,13 +65,18 @@ void EarleyParser::setRules (QList<Rule> list)  {
 //  }
 }
 
+void EarleyParser::setIgnored (QString i)  {
+  ignored = i;
+}
+
 TreeNode EarleyParser::parse (QString input)  {
   chart.clear ();
   
   QStringList words;
   
   for (int x = 0; x < input.size (); x++)
-    words.append ("\"" + input[x] + "\"");
+    if (!ignored.contains (input[x]))
+      words.append ("\"" + input[x] + "\"");
   
   QTextStream terminal (stdout);
 //  terminal << words.join (" ") << endl;

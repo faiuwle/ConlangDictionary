@@ -134,7 +134,12 @@ bool Dictionary::clearDictionary ()  {
 }
 
 void Dictionary::setValue (QString key, QString value)  {
+  if (value.isNull ()) value = "";
+  
   db.setValue (key, value);
+  
+  if (key == LANGUAGE_NAME)
+    wordPage->setLanguageName (value);
 }
 
 void Dictionary::setDB ()  {
