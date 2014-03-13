@@ -1,6 +1,6 @@
 Version 0.3
 - Massive backend overhaul: now uses local SQLite database.
-- Search is on the wordpage now.
+- Search is on the word tab now.
 - Phonemes now have features; words have features instead of type/subtype.
   You can import and export features independently from the dictionary.
 - Discovered and killed insideous pointer-related logic error that may have 
