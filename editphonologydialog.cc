@@ -53,13 +53,17 @@ EditPhonologyDialog::EditPhonologyDialog (CDICDatabase data, int w)  {
   dotBackClearLayout->addStretch (1);
   
   prevSegmentButton = new QPushButton ("<");
-  prevSegmentButton->setEnabled (false);
   prevSegmentButton->setMaximumSize (prevSegmentButton->sizeHint ());
   nextSegmentButton = new QPushButton (">");
   nextSegmentButton->setMaximumSize (nextSegmentButton->sizeHint ());
-  if (phonology.size () == 0)
+  if (phonology.size () == 0)  {
     segmentLabel = new QLabel ("Onset");
-  else segmentLabel = new QLabel ("Coda");
+    prevSegmentButton->setEnabled (false);
+  }
+  else  {
+    segmentLabel = new QLabel ("Coda");
+    nextSegmentButton->setEnabled (false);
+  }
   
   segmentNavigationLayout = new QHBoxLayout;
   segmentNavigationLayout->addStretch (1);
