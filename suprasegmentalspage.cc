@@ -21,9 +21,7 @@
 using namespace std;
 
 #include "const.h"
-
 #include "suprasegmentalspage.h"
-
 #include "choosephonemesdialog.h"
 
 SuprasegmentalsPage::SuprasegmentalsPage ()  {
@@ -40,7 +38,6 @@ SuprasegmentalsPage::SuprasegmentalsPage ()  {
   addSuprasegmentalLayout = new QHBoxLayout;
   deleteButton = new QPushButton ("Delete");
   deleteButton->setMaximumSize (deleteButton->sizeHint ());
-//  deleteButton->setEnabled (false);
   addSuprasegmentalLayout->addWidget (addSuprasegmentalButton);
   addSuprasegmentalLayout->addWidget (addSuprasegmentalEdit);
   addSuprasegmentalLayout->addWidget (deleteButton);
@@ -71,7 +68,6 @@ SuprasegmentalsPage::SuprasegmentalsPage ()  {
   applicablePhonemesLabel = new QLabel;
   editPhonemesButton = new QPushButton ("Edit Phonemes");
   editPhonemesButton->setMaximumSize (editPhonemesButton->sizeHint ());
-//  editPhonemesButton->setEnabled (false);
   phonemesLayout = new QHBoxLayout;
   phonemesLayout->addWidget (phonemesLabel);
   phonemesLayout->addWidget (applicablePhonemesLabel);
@@ -154,8 +150,6 @@ void SuprasegmentalsPage::clearDB ()  {
 }
 
 void SuprasegmentalsPage::setDB (CDICDatabase database)  {
-//  clearDB ();
-  
   QAbstractItemModel *oldModel = suprasegmentalModel;
   
   db = database;

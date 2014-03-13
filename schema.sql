@@ -105,8 +105,6 @@ create table NaturalClassPhon
   (bundleID integer primary key not null,
    name text unique not null);
 
---insert into NaturalClassPhon values (0, "Anything");
-
 -- Feature/value pairs associated with phoneme natural classes
 create table FeatureBundlePhon
   (id int not null,

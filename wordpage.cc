@@ -257,8 +257,6 @@ void WordPage::setLanguageName (QString language)  {
 }
 
 void WordPage::setChanged ()  {
-//  cout << "setChanged" << endl;
-  
   submitButton->setEnabled (true);
 }
 
@@ -291,8 +289,6 @@ void WordPage::search ()  {
 }
 
 void WordPage::displayWord ()  {
-//  cout << "displayWord" << endl;
-  
   if (!wordView->selectionModel ()->currentIndex ().isValid ())
     return;
   
@@ -337,8 +333,6 @@ void WordPage::updateNCModel ()  {
 }
 
 void WordPage::submitChanges ()  {
-//  cout << "submitChanges" << endl;
-  
   if (!mapper) return;
   
   QModelIndex index = wordView->selectionModel ()->currentIndex ();
@@ -441,10 +435,7 @@ void WordPage::parseWord ()  {
 
 void WordPage::parseWord (int id)  {
   if (dirty)  {
-    phonemes = db.getPhonemesAndSpellings ();/*
-    onsets = db.getPhonotacticSequenceList (ONSET);
-    peaks = db.getPhonotacticSequenceList (PEAK);
-    codas = db.getPhonotacticSequenceList (CODA);*/
+    phonemes = db.getPhonemesAndSpellings ();
     diacriticSupras = db.getDiacriticSupras ();
     beforeSupras = db.getBeforeSupras ();
     afterSupras = db.getAfterSupras ();
@@ -454,12 +445,6 @@ void WordPage::parseWord (int id)  {
     parser.setRules (ruleList);
     parser.setIgnored (db.getValue (IGNORED_CHARACTERS));
     
-//    QTextStream terminal (stdout);
-    
-//    db.setPhonology (1, convertTree (parser.parse (db.getWordName (1))));
-    
-//    terminal << db.getRepresentation (1) << endl;
-    
     dirty = false;
   }
   
@@ -467,301 +452,7 @@ void WordPage::parseWord (int id)  {
   db.setPhonology (id, convertTree (parser.parse (word)));
   
   emit wordParsed ();
-  
-  QTextStream terminal (stdout);
-//  terminal << word << ", " << db.getRepresentation (id) << endl;
-  
-/*
-  if (db.getValue (USE_PHONOTACTICS) == "false")
-    return;
-  
-  QString unparsed = db.getWordName (id);
-  bool onsetRequired = (db.getValue (ONSET_REQUIRED) == "true");
-  tempSyllList.clear ();
-  int currentSyll = 0;
-  
-  QString ignored = db.getValue (IGNORED_CHARACTERS);
-  for (int x = 0; x < ignored.size (); x++)
-    unparsed.remove (ignored[x]);
-  
-  while (unparsed != "")  {
-    if (tempSyllList.size () == currentSyll)  {
-      Syllable s;
-      s.beforeText = "";
-      s.onsetText.clear ();
-      s.peakText.clear ();
-      s.codaText.clear ();
-      s.afterText = "";
-      s.onsetNum = -1;
-      s.peakNum = -1;
-      s.codaNum = -1;
-      tempSyllList.append (s);
-    }
-    
-    for (int x = 0; x < beforeSupras.size (); x++)  {
-      if (beforeSupras[x].domain == SUPRA_DOMAIN_PHON)
-        continue;
-      
-      if (unparsed.startsWith (beforeSupras[x].text))  {
-        tempSyllList[currentSyll].supras.append (beforeSupras[x].name);
-        tempSyllList[currentSyll].beforeText = beforeSupras[x].text;
-        unparsed.remove (0, beforeSupras[x].text.size ());
-        break;
-      }
-    }
-    
-    if (!parseOnset (unparsed, currentSyll, false))
-      if (onsetRequired || unparsed == "")
-        break;
-      
-    if (!parsePeak (unparsed, currentSyll, false))
-      break;
-    
-    for (int x = 0; x < afterSupras.size (); x++)  {
-      if (afterSupras[x].domain == SUPRA_DOMAIN_PHON)
-        continue;
-      
-      if (unparsed.startsWith (afterSupras[x].text))  {
-        tempSyllList[x].supras.append (afterSupras[x].name);
-        tempSyllList[x].afterText = afterSupras[x].text;
-        unparsed.remove (0, afterSupras[x].text.size ());
-        break;
-      }
-    }
-    
-    currentSyll++;
-  }
-  
-  db.setPhonology (id, tempSyllList);
-*/
 }
-
-/*
-bool WordPage::parseOnset (QString &unparsed, int current, bool reparse)  {
-  if (unparsed == "" && !reparse) return false;
-  
-  int currentOnset = 0;
-  
-  if (reparse)  {
-    currentOnset = tempSyllList[current].onsetNum;
-//    unparsed.prepend (tempSyllList[current].onsetText.join (""));
-//    tempSyllList[current].onset.clear ();
-//    tempSyllList[current].onsetText.clear ();
-  }
-  
-  if (currentOnset < 0) currentOnset = 0;
-  
-  bool onsetFound = false;
-  
-  for (int x = currentOnset; x < onsets.size (); x++)  {
-    bool sequenceReparse = (x == currentOnset ? reparse : false);
-    
-    if (trySequence (unparsed, current, ONSET, x, sequenceReparse))  {
-      onsetFound = true;
-      tempSyllList[current].onsetNum = x;
-//      tempSyllList[current].onset = phonemeList;
-//      tempSyllList[current].onsetText = spellingList.join ("");
-//      unparsed.remove (0, spellingList.join ("").size ());
-      break;
-    }
-  }
-    
-  if (!onsetFound && current == 0)
-    return false;
-  
-  if (!onsetFound)  {
-    if (parseCoda (unparsed, current - 1))
-      return parseOnset (unparsed, current, false);
-    else return false;
-  }
-  
-  else return true;
-}
-
-bool WordPage::parsePeak (QString &unparsed, int current, bool reparse)  {
-  if (unparsed == "" && !reparse)
-    if (!parseOnset (unparsed, current, true))
-      return false;
-    
-  int currentPeak = 0;
-  
-  if (reparse)  {
-    currentPeak = tempSyllList[current].peakNum;
-//    unparsed.prepend (tempSyllList[current].peakText.join (""));
-//    tempSyllList[current].peak.clear ();
-//    tempSyllList[current].peakText.clear ();
-  }
-  
-  if (currentPeak < 0) currentPeak = 0;
-  
-  bool peakFound = false;
-  
-  for (int x = currentPeak; x < peaks.size (); x++)  {
-    bool sequenceReparse = (x == currentPeak ? reparse : false);
-    
-    if (trySequence (unparsed, current, PEAK, x, sequenceReparse))  {
-      peakFound = true;
-      tempSyllList[current].peakNum = x;
-//      tempSyllList[current].peak = phonemeList;
-//      tempSyllList[current].peakText = spellingList.join ("");
-//      unparsed.remove (0, spellingList.join ("").size ());
-      break;
-    }
-  }
-    
-  if (!peakFound)  {
-    if (parseOnset (unparsed, current, true))
-      return parsePeak (unparsed, current, false);
-    else return false;
-  }
-  
-  else return true;
-}
-
-bool WordPage::parseCoda (QString &unparsed, int current)  {
-  if (codas.size () == 0) return false;
-  
-  unparsed.prepend (tempSyllList[current].afterText);
-  tempSyllList[current].afterText = "";
-  for (int x = 0; x < afterSupras.size (); x++)
-    tempSyllList[current].supras.removeAll (afterSupras[x].name);
-    
-  int currentCoda = 0;
-  currentCoda = tempSyllList[current].codaNum;
-  if (currentCoda < 0) currentCoda = 0;
-//  unparsed.prepend (tempSyllList[current].codaText.join (""));
-//  tempSyllList[current].coda.clear ();
-//  tempSyllList[current].codaText.clear ();
-  
-  bool codaFound = false;
-  
-  for (int x = currentCoda; x < codas.size (); x++)  {
-    bool sequenceReparse = (x == currentCoda);
-    
-    if (trySequence (unparsed, current, CODA, x, sequenceReparse))  {
-      codaFound = true;
-      tempSyllList[current].codaNum = x;
-//      tempSyllList[current].coda = phonemeList;
-//      tempSyllList[current].codaText = spellingList.join ("");
-//      unparsed.remove (0, spellingList.join ("").size ());
-      break;
-    }
-  }
-    
-  if (codaFound)
-    for (int x = 0; x < afterSupras.size (); x++)  {
-      if (afterSupras[x].domain == SUPRA_DOMAIN_PHON)
-        continue;
-      
-      if (unparsed.startsWith (afterSupras[x].text))  {
-        tempSyllList[current].supras.append (afterSupras[x].name);
-        tempSyllList[current].afterText = afterSupras[x].text;
-        unparsed.remove (0, afterSupras[x].text.size ());
-      }
-    }
-    
-  return codaFound;
-}
-
-bool WordPage::trySequence (QString &unparsed, int current, int loc, 
-                            int index, bool reparse)  {
-  QStringList previous;
-  
-  if (reparse)  {
-    if (loc == ONSET)  {
-      for (int x = 0; x < tempSyllList[current].onset.size (); x++)
-        previous.append (tempSyllList[current].onset[x])
-      
-      unparsed.prepend (tempSyllList[current].onsetText.join (""));
-      tempSyllList[current].onset.clear ();
-      tempSyllList[current].onsetText.clear ();
-    }
-    
-    else if (loc == PEAK)  {
-      for (int x = 0; x < tempSyllList[current].peak.size (); x++)
-        previous.append (tempSyllList[current].peak[x]);
-      
-      unparsed.prepend (tempSyllList[current].peakText.join (""));
-      tempSyllList[current].peak.clear ();
-      tempSyllList[current].peakText.clear ();
-    }
-    
-    else  {
-      for (int x = 0; x < tempSyllList[current].coda.size (); x++)
-        previous.append (tempSyllList[current].coda[x]);
-      
-      unparsed.prepend (tempSyllList[current].codaText.join (""));
-      tempSyllList[current].coda.clear ();
-      tempSyllList[current].codaText.clear ();
-    }
-  }
-  
-  QList<QStringList> sequence;
-  if (loc == ONSET) sequence = onsets[index];
-  else if (loc == PEAK) sequence = peaks[index];
-  else sequence = codas[index];
-                        
-  if (previous.size () != sequence.size ())
-    reparse = false;
-  
-  for (int x = 0; x < sequence.size (); x++)  {
-    QStringList possiblePhonemes = db.getPhonemesOfClass (sequence[x]);
-    
-    int currentPhoneme = 0;
-    if (reparse)
-      currentPhoneme = possiblePhonemes.indexOf (previous[x]);
-    
-    bool phonemeFound = false;
-    
-    for (int p = currentPhoneme; p < possiblePhonemes.size (); p++)  {
-      QStringList spellingList = phonemes[possiblePhonemes[p]];
-      
-      for (int s = 0; s < spellingList.size (); s++)  {
-        QStringList supras;
-        QString actualSpelling = trySpelling (unparsed, spellingList[s], supras);
-        
-        if (actualSpelling != "")  {
-          phonemeFound = true;
-          
-          Phoneme ph;
-          ph.name = possiblePhonemes[p];
-          ph.supras = supras;
-          
-          if (loc == ONSET)  {
-            tempSyllList[current].onset.append (ph);
-            tempSyllList[current].onsetText.append (actualSpelling);
-          }
-          
-          else if (loc == PEAK)  {
-            tempSyllList[current].peak.append (ph);
-            tempSyllList[current].peakText.append (actualSpelling);
-          }
-          
-          else  {
-            tempSyllList[current].coda.append (ph);
-            tempSyllList[current].codaText.append (actualSpelling);
-          }
-          
-          unparsed.remove (0, actualSpelling.size ());
-          break;
-        }
-      }
-      
-      if (phonemeFound) break;
-    }
-    
-    if (!phonemeFound) return false;
-    else phonemeFound = false;
-  }
-  
-  return true;
-}
-
-QString WordPage::trySpelling (QString unparsed, QString spelling, QStringList &supras)  {
-  if (unparsed == "") return "";
-                        
-  return "";
-}*/
 
 QList<Syllable> WordPage::convertTree (TreeNode node)  {
   QList<Syllable> syllList;
@@ -797,9 +488,6 @@ QList<Syllable> WordPage::convertTree (TreeNode node)  {
     if (x == children)
       break;
   }
-  
-//  for (int x = 0; x < treeList.size (); x++)
-//    terminal << parser.stringTreeNode (treeList[x]) << endl;
   
   // for each syllable
   for (int x = 0; x < treeList.size (); x++)  {
@@ -890,13 +578,9 @@ QList<Syllable> WordPage::convertTree (TreeNode node)  {
           }
           
           if (!subPhonFound) break;
-          
-//          terminal << beforeText << endl;
       
           if (beforeText != "")
             for (int s = 0; s < beforeSupras.size (); s++)  {
-//              terminal << beforeSupras[s].domain << ", " << beforeSupras[s].text << endl;
-              
               if (beforeSupras[s].domain == SUPRA_DOMAIN_PHON &&
                   beforeSupras[s].text == beforeText)  {
                 p.supras.append (beforeSupras[s].name);
@@ -937,8 +621,6 @@ QList<Syllable> WordPage::convertTree (TreeNode node)  {
               
           for (int sp = 0; sp < phonemes[p.name].size (); sp++)
             for (int s = 0; s < diacriticSupras.size (); s++)  {
-//              terminal << diacriticSupras[s].type << db.applyDiacritic (diacriticSupras[s].type, phonemes[p.name][sp]) << endl;
-              
               if (spelling == db.applyDiacritic (diacriticSupras[s].type, phonemes[p.name][sp]))  {
                 if (diacriticSupras[s].domain == SUPRA_DOMAIN_PHON)  {
                   p.supras.append (diacriticSupras[s].name);

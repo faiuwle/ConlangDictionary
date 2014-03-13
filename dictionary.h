@@ -8,15 +8,11 @@
 
 #include "cdicdatabase.h"
 
-//#include <QDomElement>
-
 class MainWindow;
 class PhonologyPage;
 class PhonotacticsPage;
 class SuprasegmentalsPage;
 class WordPage;
-//class SearchPage;
-//class LoadPartialWordlistDialog;
 
 class Dictionary : public QTabWidget {
   Q_OBJECT

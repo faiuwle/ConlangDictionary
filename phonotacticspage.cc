@@ -38,7 +38,6 @@ PhonotacticsPage::PhonotacticsPage ()  {
   
   QLabel *onsetLabel = new QLabel ("<b>Onsets</b>");
   deleteOnsetButton = new QPushButton ("Delete");
-//  deleteOnsetButton->setEnabled (false);
   onsetModel = new QStringListModel ();
   onsetView = new QListView;
   onsetView->setModel (onsetModel);
@@ -57,7 +56,6 @@ PhonotacticsPage::PhonotacticsPage ()  {
   
   QLabel *peakLabel = new QLabel ("<b>Peaks</b>");
   deletePeakButton = new QPushButton ("Delete");
-//  deletePeakButton->setEnabled (false);
   peakModel = new QStringListModel ();
   peakView = new QListView;
   peakView->setModel (peakModel);
@@ -76,7 +74,6 @@ PhonotacticsPage::PhonotacticsPage ()  {
   
   QLabel *codaLabel = new QLabel ("<b>Codas</b>");
   deleteCodaButton = new QPushButton ("Delete");
-//  deleteCodaButton->setEnabled (false);
   codaModel = new QStringListModel ();
   codaView = new QListView;
   codaView->setModel (codaModel);

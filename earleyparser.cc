@@ -18,8 +18,6 @@ void EarleyParser::setRules (QList<Rule> list)  {
     if (list[x].rhs.size () == 1 && list[x].rhs[0].startsWith ("\"") &&
         list[x].rhs[0].endsWith ("\""))  {
       QString terminal = list[x].rhs[0];
-//      terminal.chop (1);
-//      terminal.remove (0, 1);
       
       if (!terminals.contains (terminal))
         terminals[terminal] = QStringList ();
@@ -38,31 +36,6 @@ void EarleyParser::setRules (QList<Rule> list)  {
       if (!hybrid) nonterminals.append (list[x]);
     }
   }
-  
-//  QTextStream out (stdout);
-  
-//  out << "Nonterminals: " << endl;
-//  for (int x = 0; x < nonterminals.size (); x++)
-//    printRule (nonterminals[x]);
-  
-//  out << endl << endl << "Preterminals: " << endl;
-//  for (int x = 0; x < preterminals.size (); x++)
-//    out << preterminals[x] << " ";
-  
-//  out << endl << endl << "Terminals: " << endl;
-//  QMap<QString, QStringList>::const_iterator i = terminals.constBegin ();
-//  while (i != terminals.constEnd ())  {
-//    out << i.key () << ":";
-    
-//    QStringList ptList = i.value ();
-    
-//    for (int x = 0; x < ptList.size (); x++)
-//      out << " " << ptList[x];
-    
-//    out << endl;
-    
-//    i++;
-//  }
 }
 
 void EarleyParser::setIgnored (QString i)  {
@@ -79,7 +52,6 @@ TreeNode EarleyParser::parse (QString input)  {
       words.append ("\"" + input[x] + "\"");
   
   QTextStream terminal (stdout);
-//  terminal << words.join (" ") << endl;
   
   ChartItem start;
   start.lhs = "TOP";
@@ -219,9 +191,6 @@ void EarleyParser::runPredictor (int chartPosition, int itemNum)  {
       
       addChartItem (newItem, item.end);
     }
-    
-//  cout << "Ran predictor:" << endl;
-//  printChart ();
 }
 
 void EarleyParser::runScanner (int chartPosition, int itemNum, QString word)  {
@@ -249,9 +218,6 @@ void EarleyParser::runScanner (int chartPosition, int itemNum, QString word)  {
     
     addChartItem (newItem, item.end + 1);
   }
-  
-//  cout << "Ran scanner:" << endl;
-//  printChart ();
 }
 
 void EarleyParser::runCompleter (int chartPosition, int itemNum)  {
@@ -289,9 +255,6 @@ void EarleyParser::runCompleter (int chartPosition, int itemNum)  {
       addChartItem (newItem, item.end);
     }
   }
-  
-//  cout << "Ran completer:" << endl;
-//  printChart ();
 }
 
 void EarleyParser::printRule (Rule rule)  {

@@ -63,22 +63,13 @@ class WordPage : public QWidget  {
     
   private:
     void parseWord (int);
-//    bool parseOnset (QString&, int, bool);
-//    bool parsePeak (QString&, int, bool);
-//    bool parseCoda (QString&, int);
-//    bool trySequence (QString&, int, int, int, bool);
-//    QString trySpelling (QString, QString, QStringList&);
     
     QList<Syllable> convertTree (TreeNode);
     
     // used for word parsing
     bool dirty;
     EarleyParser parser;
-//    QStringList spellings;
     QMap<QString, QStringList> phonemes;
-//    QList< QList<QStringList> > onsets;
-//    QList< QList<QStringList> > peaks;
-//    QList< QList<QStringList> > codas;
     QList<Suprasegmental> diacriticSupras;
     QList<Suprasegmental> beforeSupras;
     QList<Suprasegmental> afterSupras;

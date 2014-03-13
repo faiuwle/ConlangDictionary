@@ -52,11 +52,6 @@ ManageFeaturesDialog::ManageFeaturesDialog (int d, CDICDatabase b)  {
                                     QAbstractItemView::SelectedClicked);
   featureListView->setSelectionMode (QAbstractItemView::ExtendedSelection);
   featureListView->setModel (featureListModel);
-//  ManageFeaturesDelegate *fdelegate = new ManageFeaturesDelegate (this);
-//  featureListView->setItemDelegate (fdelegate);
-  
-//  connect (fdelegate, SIGNAL (replaceFeature (QString, QString)), this,
-//           SLOT (replaceFeature (QString, QString)));
 
   connect (featureListModel, SIGNAL (itemChanged (QVariant, QVariant)), this,
            SLOT (replaceFeature (QVariant, QVariant)));
@@ -108,11 +103,6 @@ ManageFeaturesDialog::ManageFeaturesDialog (int d, CDICDatabase b)  {
   subfeatureListView->setEditTriggers (QAbstractItemView::DoubleClicked |
                                        QAbstractItemView::SelectedClicked);
   subfeatureListView->setSelectionMode (QAbstractItemView::ExtendedSelection);
-//  ManageFeaturesDelegate *sdelegate = new ManageFeaturesDelegate (this);
-//  subfeatureListView->setItemDelegate (sdelegate);
-  
-//  connect (sdelegate, SIGNAL (replaceFeature (QString, QString)), this,
-//           SLOT (replaceSubfeature (QString, QString)));
 
   connect (subfeatureListModel, SIGNAL (itemChanged (QVariant, QVariant)), this,
            SLOT (replaceSubfeature (QVariant, QVariant)));

@@ -88,11 +88,9 @@ class CDICDatabase {
     QList<Suprasegmental> getBeforeSupras ();
     QList<Suprasegmental> getAfterSupras ();
     QList<Suprasegmental> getDoubledSupras ();
-//    QStringList getAllSpellings ();
     QMap<QString, QStringList> getPhonemesAndSpellings ();
     QList<int> getAllWordIDs ();
     QString getWordName (int);
-//    QStringList getPossiblePhonemes (QString, QStringList);
     QStringList getPhonemesOfClass (QStringList);
     QList<Rule> getParsingGrammar ();
     

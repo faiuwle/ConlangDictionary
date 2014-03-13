@@ -2273,56 +2273,7 @@ QList<Suprasegmental> CDICDatabase::getDoubledSupras ()  {
   query.finish ();
   return supraList;
 }
-/*
-QStringList CDICDatabase::getAllSpellings ()  {
-  QMessageBox::information (NULL, "", "getAllSpellings");
-  
-  if (!db.isOpen ()) return QStringList ();
-  
-  QList<bool> supraExists;
-  for (int x = 0; x < TYPE_BEFORE; x++)  {
-    supraExists.append (false);
-    
-    QSqlQuery squery (db);
-    squery.prepare ("select name from Suprasegmental where spellType == :t");
-    squery.bindValue (":t", x);
-    
-    if (!squery.exec ())  {
-      QUERY_ERROR(squery)
-      squery.finish ();
-      continue;
-    }
-    
-    supraExists[x] = squery.next ();
-    squery.finish ();
-  }
-  
-  QStringList list;
-  
-  QSqlQuery query (db);
-  query.prepare ((QString)"select distinct spelling from Phoneme, " +
-                  "PhonemeSpelling where phonemeID == id order by alpha");
-  
-  if (!query.exec ())  {
-    QUERY_ERROR(query)
-    query.finish ();
-    return list;
-  }
-  
-  while (query.next ())  {
-    QString spelling = query.value (0).toString ();
-    list.append (spelling);
-    
-    if (plainChars.contains (spelling))
-      for (int x = 0; x < supraExists.size (); x++)
-        if (supraExists[x]) 
-          list.append (applyDiacritic (x, spelling));
-  }
-  
-  query.finish ();
-  return list;
-}
-*/
+
 QMap<QString, QStringList> CDICDatabase::getPhonemesAndSpellings ()  {
   if (!db.isOpen ()) return QMap<QString, QStringList> ();
   
@@ -2337,9 +2288,6 @@ QMap<QString, QStringList> CDICDatabase::getPhonemesAndSpellings ()  {
     query.finish ();
     return map;
   }
-  
-//  int currentPhoneme = 0;
-//  list.append (QStringList ());
   
   while (query.next ())  {
     if (!map.contains (query.value (0).toString ()))
@@ -2395,37 +2343,7 @@ QString CDICDatabase::getWordName (int id)  {
   
   return name;
 }
-/*
-QStringList CDICDatabase::getPossiblePhonemes (QString spelling, QStringList classNames)  {
-  if (!db.isOpen ()) return QStringList ();
-  
-  QStringList list;
-  
-  QStringList placeholders;
-  for (int x = 0; x < classNames.size (); x++)
-    placeholders.append ("?");
-  
-  QSqlQuery query (db);
-  query.prepare ("select name from Phoneme, PhonemeSpelling, PhonClassList " +
-                 (QString)"where phonemeID == Phoneme.id and Phoneme.id == " +
-                 "PhonClassList.id and spelling == ? and class in (" +
-                 placeholders.join (", ") + ") order by alpha");
-  query.bindValue (0, spelling);
-  for (int x = 0; x < classNames.size (); x++)
-    query.bindValue (x+1, classNames[x]);
-  
-  if (!query.exec ())  {
-    QUERY_ERROR(query)
-    query.finish ();
-    return list;
-  }
-  
-  while (query.next ())
-    list.append (query.value (0).toString ());
 
-  return list;
-}
-*/
 QStringList CDICDatabase::getPhonemesOfClass (QStringList classNames)  {
   if (!db.isOpen ()) return QStringList ();
   
@@ -3730,8 +3648,7 @@ bool CDICDatabase::readSQLFile (QString filename)  {
   };
       
   file.close ();
-  
-//  QMessageBox::information (NULL, "", "End of readSQLFile");
+
   return true;
 }
 
