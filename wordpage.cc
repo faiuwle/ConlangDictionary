@@ -261,8 +261,10 @@ void WordPage::setChanged ()  {
 }
 
 void WordPage::addWord ()  {
-  if (addWordEdit->text () != "")
-    db.addWord (addWordEdit->text ());
+  if (addWordEdit->text () != "")  {
+    int wordID = db.addWord (addWordEdit->text ());
+    parseWord (wordID);
+  }
   
   updateModels ();
   

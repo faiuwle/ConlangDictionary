@@ -1421,8 +1421,8 @@ QSqlTableModel *CDICDatabase::getWordDisplayModel ()  {
   return model;
 }
     
-void CDICDatabase::addWord (QString name, QString definition)  {
-  if (!db.isOpen ()) return;
+int CDICDatabase::addWord (QString name, QString definition)  {
+  if (!db.isOpen ()) return 0;
   
   QSqlQuery query (db);
   query.prepare ("insert into Word values (null, :name, :def)");
@@ -1433,6 +1433,18 @@ void CDICDatabase::addWord (QString name, QString definition)  {
     QUERY_ERROR(query)
     
   query.finish ();
+  
+  query.prepare ("select max(id) from Word");
+  
+  if (!query.exec ())
+    QUERY_ERROR(query)
+    
+  query.next ();
+  
+  int wordID = query.value (0).toInt ();
+  query.finish ();
+  
+  return wordID;
 }
     
 void CDICDatabase::deleteWord (int wordID)  {

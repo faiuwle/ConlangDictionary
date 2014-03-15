@@ -74,7 +74,7 @@ class CDICDatabase {
     void searchWordList (QSqlQueryModel*, QString, QString, QString);
     QSqlTableModel *getWordDisplayModel ();
     
-    void addWord (QString name, QString definition = "");
+    int addWord (QString name, QString definition = "");
     void deleteWord (int);
     void assignNaturalClass (QString, int);
     void setPhonology (int, QList<Syllable>);
