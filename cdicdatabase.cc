@@ -449,6 +449,7 @@ bool CDICDatabase::saveToText (QString filename, QString pattern)  {
   
   QFile file (filename);
   QTextStream out (&file);
+  out.setCodec ("UTF-8");
   file.open (QIODevice::WriteOnly | QIODevice::Text);
   
   while (query.next ())  {
