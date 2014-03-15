@@ -69,7 +69,8 @@ void MainWindow::loadXML ()  {
     return;
   }
   
-  dictionary->clearDictionary ();
+  if (!dictionary->clearDictionary ())
+    return;
   
   QString filename = QFileDialog::getOpenFileName (this, "Open XML", path,
                                                    "XML Dictionaries (*.cdic)");
