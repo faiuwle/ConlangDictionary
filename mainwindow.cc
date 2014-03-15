@@ -61,6 +61,11 @@ void MainWindow::openDictionary ()  {
   if (filename.isEmpty ()) return;
   
   dictionary->openDB (filename);
+  
+  if (dictionary->getValue (USE_UNICODE) == "true")
+    unicodeAct->setChecked (true);
+  if (dictionary->getValue (SQUARE_BRACKETS) == "true")
+    bracketsAct->setChecked (true);
 }
 
 void MainWindow::loadXML ()  {

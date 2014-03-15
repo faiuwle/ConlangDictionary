@@ -92,10 +92,7 @@ void CDICDatabase::clear ()  {
   
   db.transaction ();
   
-  if (!readSQLFile ("drop.sql"))
-    db.rollback ();
-  
-  else if (!readSQLFile ("schema.sql"))
+  if (!readSQLFile ("clear.sql"))
     db.rollback ();
   
   db.commit ();

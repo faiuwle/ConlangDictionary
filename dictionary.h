@@ -33,6 +33,7 @@ class Dictionary : public QTabWidget {
     bool clearDictionary ();
     
     void setValue (QString, QString);
+    QString getValue (QString);
     
   signals:
     void languageNameUpdated (QString);

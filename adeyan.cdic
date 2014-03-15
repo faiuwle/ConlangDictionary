@@ -1,0 +1,1959 @@
+<!DOCTYPE ConlangML>
+<conlang name="" >
+ <inventory>
+  <phonemeDef name="a" >
+   <orthography>a</orthography>
+   <notes></notes>
+  </phonemeDef>
+  <phonemeDef name="e" >
+   <orthography>e</orthography>
+   <notes></notes>
+  </phonemeDef>
+  <phonemeDef name="i" >
+   <orthography>i</orthography>
+   <notes></notes>
+  </phonemeDef>
+  <phonemeDef name="o" >
+   <orthography>o</orthography>
+   <notes></notes>
+  </phonemeDef>
+  <phonemeDef name="u" >
+   <orthography>u</orthography>
+   <notes></notes>
+  </phonemeDef>
+  <phonemeDef name="p" >
+   <orthography>p</orthography>
+   <notes></notes>
+  </phonemeDef>
+  <phonemeDef name="θ" >
+   <orthography>th</orthography>
+   <notes></notes>
+  </phonemeDef>
+  <phonemeDef name="t" >
+   <orthography>t</orthography>
+   <notes></notes>
+  </phonemeDef>
+  <phonemeDef name="k" >
+   <orthography>k</orthography>
+   <notes></notes>
+  </phonemeDef>
+  <phonemeDef name="b" >
+   <orthography>b</orthography>
+   <notes></notes>
+  </phonemeDef>
+  <phonemeDef name="d" >
+   <orthography>d</orthography>
+   <notes></notes>
+  </phonemeDef>
+  <phonemeDef name="g" >
+   <orthography>g</orthography>
+   <notes></notes>
+  </phonemeDef>
+  <phonemeDef name="f" >
+   <orthography>f</orthography>
+   <notes></notes>
+  </phonemeDef>
+  <phonemeDef name="s" >
+   <orthography>s</orthography>
+   <notes></notes>
+  </phonemeDef>
+  <phonemeDef name="ʃ" >
+   <orthography>x</orthography>
+   <notes></notes>
+  </phonemeDef>
+  <phonemeDef name="ʒ" >
+   <orthography>z</orthography>
+   <notes></notes>
+  </phonemeDef>
+  <phonemeDef name="h" >
+   <orthography>h</orthography>
+   <notes></notes>
+  </phonemeDef>
+  <phonemeDef name="ʧ" >
+   <orthography>c</orthography>
+   <notes></notes>
+  </phonemeDef>
+  <phonemeDef name="ʤ" >
+   <orthography>j</orthography>
+   <notes></notes>
+  </phonemeDef>
+  <phonemeDef name="n" >
+   <orthography>n</orthography>
+   <notes></notes>
+  </phonemeDef>
+  <phonemeDef name="m" >
+   <orthography>m</orthography>
+   <notes></notes>
+  </phonemeDef>
+  <phonemeDef name="j" >
+   <orthography>y</orthography>
+   <notes></notes>
+  </phonemeDef>
+  <phonemeDef name="l" >
+   <orthography>l</orthography>
+   <notes></notes>
+  </phonemeDef>
+  <phonemeDef name="ɾ" >
+   <orthography>r</orthography>
+   <notes></notes>
+  </phonemeDef>
+  <alphabet>a e i o u p θ t k b d g f s ʃ ʒ h ʧ ʤ n m j l ɾ</alphabet>
+ </inventory>
+ <phonotactics onsetReq="0" >
+  <onsets>
+   <sequence>p l</sequence>
+   <sequence>ʃ l</sequence>
+   <sequence>θ l</sequence>
+   <sequence>g l</sequence>
+   <sequence>f l</sequence>
+   <sequence>ʃ ɾ</sequence>
+   <sequence>ʃ</sequence>
+   <sequence>t l</sequence>
+   <sequence>θ</sequence>
+   <sequence>t</sequence>
+   <sequence>b l</sequence>
+   <sequence>k</sequence>
+   <sequence>b</sequence>
+   <sequence>d l</sequence>
+   <sequence>k l</sequence>
+   <sequence>θ ɾ</sequence>
+   <sequence>t ɾ</sequence>
+   <sequence>k ɾ</sequence>
+   <sequence>b ɾ</sequence>
+   <sequence>d ɾ</sequence>
+   <sequence>p</sequence>
+   <sequence>d</sequence>
+   <sequence>g ɾ</sequence>
+   <sequence>p ɾ</sequence>
+   <sequence>g</sequence>
+   <sequence>f</sequence>
+   <sequence>s l</sequence>
+   <sequence>f ɾ</sequence>
+   <sequence>s ɾ</sequence>
+   <sequence>s</sequence>
+   <sequence>ʒ l</sequence>
+   <sequence>ʒ ɾ</sequence>
+   <sequence>ʒ</sequence>
+   <sequence>h</sequence>
+   <sequence>ʧ</sequence>
+   <sequence>ʤ</sequence>
+   <sequence>n</sequence>
+   <sequence>m</sequence>
+   <sequence>j</sequence>
+   <sequence>l</sequence>
+   <sequence>ɾ</sequence>
+  </onsets>
+  <peaks>
+   <sequence>a</sequence>
+   <sequence>e</sequence>
+   <sequence>i</sequence>
+   <sequence>o</sequence>
+   <sequence>u</sequence>
+  </peaks>
+  <codas>
+   <sequence>θ</sequence>
+   <sequence>f</sequence>
+   <sequence>s</sequence>
+   <sequence>ʃ</sequence>
+   <sequence>ʒ</sequence>
+   <sequence>ʧ</sequence>
+   <sequence>ʤ</sequence>
+   <sequence>n</sequence>
+   <sequence>m</sequence>
+   <sequence>l</sequence>
+   <sequence>ɾ</sequence>
+  </codas>
+  <ignore>'";-/</ignore>
+ </phonotactics>
+ <suprasegmentals>
+  <supraDef domain="1" name="stress" >
+   <applies></applies>
+   <spelling type="0" >Acute Accent</spelling>
+   <representation type="1" >"</representation>
+   <notes></notes>
+  </supraDef>
+  <supraDef domain="0" name="length" >
+   <applies>a e i o u</applies>
+   <spelling type="3" ></spelling>
+   <representation type="2" >:</representation>
+   <notes></notes>
+  </supraDef>
+ </suprasegmentals>
+ <wordList>
+  <wordDef subtype="" type="verb" name="par" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="p" />
+     </onset>
+     <peak>
+      <phoneme name="a" />
+     </peak>
+     <coda>
+      <phoneme name="ɾ" />
+     </coda>
+    </syllable>
+   </phonology>
+   <definition>negative auxiliary
+(coda-dropping)</definition>
+  </wordDef>
+  <wordDef subtype="" type="adjective" name="polda" >
+   <phonology>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="p" />
+     </onset>
+     <peak>
+      <phoneme name="o" >
+       <supra>length</supra>
+      </phoneme>
+     </peak>
+     <coda>
+      <phoneme name="l" />
+     </coda>
+    </syllable>
+    <syllable>
+     <onset>
+      <phoneme name="d" />
+     </onset>
+     <peak>
+      <phoneme name="a" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>large, expansive</definition>
+  </wordDef>
+  <wordDef subtype="class -tha" type="noun" name="tha" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="θ" />
+     </onset>
+     <peak>
+      <phoneme name="a" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>day</definition>
+  </wordDef>
+  <wordDef subtype="" type="classifier" name="tha" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="θ" />
+     </onset>
+     <peak>
+      <phoneme name="a" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>relating to everyday, general-use objects</definition>
+  </wordDef>
+  <wordDef subtype="" type="number" name="thee" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="θ" />
+     </onset>
+     <peak>
+      <phoneme name="e" >
+       <supra>length</supra>
+      </phoneme>
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>nine</definition>
+  </wordDef>
+  <wordDef subtype="" type="verb" name="théme" >
+   <phonology>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="θ" />
+     </onset>
+     <peak>
+      <phoneme name="e" />
+     </peak>
+     <coda/>
+    </syllable>
+    <syllable>
+     <onset>
+      <phoneme name="m" />
+     </onset>
+     <peak>
+      <phoneme name="e" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>be born</definition>
+  </wordDef>
+  <wordDef subtype="class -ra" type="coda-dropping noun" name="thélas" >
+   <phonology>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="θ" />
+     </onset>
+     <peak>
+      <phoneme name="e" />
+     </peak>
+     <coda/>
+    </syllable>
+    <syllable>
+     <onset>
+      <phoneme name="l" />
+     </onset>
+     <peak>
+      <phoneme name="a" />
+     </peak>
+     <coda>
+      <phoneme name="s" />
+     </coda>
+    </syllable>
+   </phonology>
+   <definition>river</definition>
+  </wordDef>
+  <wordDef subtype="class -ju" type="coda-dropping noun" name="thrífxon" >
+   <phonology>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="θ" />
+      <phoneme name="ɾ" />
+     </onset>
+     <peak>
+      <phoneme name="i" />
+     </peak>
+     <coda>
+      <phoneme name="f" />
+     </coda>
+    </syllable>
+    <syllable>
+     <onset>
+      <phoneme name="ʃ" />
+     </onset>
+     <peak>
+      <phoneme name="o" />
+     </peak>
+     <coda>
+      <phoneme name="n" />
+     </coda>
+    </syllable>
+   </phonology>
+   <definition>wing</definition>
+  </wordDef>
+  <wordDef subtype="" type="number" name="to" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="t" />
+     </onset>
+     <peak>
+      <phoneme name="o" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>two</definition>
+  </wordDef>
+  <wordDef subtype="class -fi" type="noun" name="tulí" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="t" />
+     </onset>
+     <peak>
+      <phoneme name="u" />
+     </peak>
+     <coda/>
+    </syllable>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="l" />
+     </onset>
+     <peak>
+      <phoneme name="i" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>word</definition>
+  </wordDef>
+  <wordDef subtype="" type="verb" name="tlú" >
+   <phonology>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="t" />
+      <phoneme name="l" />
+     </onset>
+     <peak>
+      <phoneme name="u" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>go, be possible</definition>
+  </wordDef>
+  <wordDef subtype="" type="classifier" name="ke" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="k" />
+     </onset>
+     <peak>
+      <phoneme name="e" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>relating to large, slow-moving animals</definition>
+  </wordDef>
+  <wordDef subtype="class -ya" type="noun" name="kiná" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="k" />
+     </onset>
+     <peak>
+      <phoneme name="i" />
+     </peak>
+     <coda/>
+    </syllable>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="n" />
+     </onset>
+     <peak>
+      <phoneme name="a" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>story, tale</definition>
+  </wordDef>
+  <wordDef subtype="" type="adverb" name="koní" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="k" />
+     </onset>
+     <peak>
+      <phoneme name="o" />
+     </peak>
+     <coda/>
+    </syllable>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="n" />
+     </onset>
+     <peak>
+      <phoneme name="i" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>there, near you</definition>
+  </wordDef>
+  <wordDef subtype="" type="postposition" name="dan" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="d" />
+     </onset>
+     <peak>
+      <phoneme name="a" />
+     </peak>
+     <coda>
+      <phoneme name="n" />
+     </coda>
+    </syllable>
+   </phonology>
+   <definition>full of, made of, consisting of</definition>
+  </wordDef>
+  <wordDef subtype="" type="number" name="de" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="d" />
+     </onset>
+     <peak>
+      <phoneme name="e" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>seven</definition>
+  </wordDef>
+  <wordDef subtype="class -fi" type="noun" name="dégen" >
+   <phonology>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="d" />
+     </onset>
+     <peak>
+      <phoneme name="e" />
+     </peak>
+     <coda/>
+    </syllable>
+    <syllable>
+     <onset>
+      <phoneme name="g" />
+     </onset>
+     <peak>
+      <phoneme name="e" />
+     </peak>
+     <coda>
+      <phoneme name="n" />
+     </coda>
+    </syllable>
+   </phonology>
+   <definition>finger</definition>
+  </wordDef>
+  <wordDef subtype="class -yen" type="noun" name="gaxí" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="g" />
+     </onset>
+     <peak>
+      <phoneme name="a" />
+     </peak>
+     <coda/>
+    </syllable>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="ʃ" />
+     </onset>
+     <peak>
+      <phoneme name="i" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>father</definition>
+  </wordDef>
+  <wordDef subtype="class -ju" type="coda-dropping noun" name="geerháth" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="g" />
+     </onset>
+     <peak>
+      <phoneme name="e" >
+       <supra>length</supra>
+      </phoneme>
+     </peak>
+     <coda>
+      <phoneme name="ɾ" />
+     </coda>
+    </syllable>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="h" />
+     </onset>
+     <peak>
+      <phoneme name="a" />
+     </peak>
+     <coda>
+      <phoneme name="θ" />
+     </coda>
+    </syllable>
+   </phonology>
+   <definition>nose</definition>
+  </wordDef>
+  <wordDef subtype="class -ke" type="noun" name="glic" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="g" />
+      <phoneme name="l" />
+     </onset>
+     <peak>
+      <phoneme name="i" />
+     </peak>
+     <coda>
+      <phoneme name="ʧ" />
+     </coda>
+    </syllable>
+   </phonology>
+   <definition>dog, wolf</definition>
+  </wordDef>
+  <wordDef subtype="class -yen" type="noun" name="fá" >
+   <phonology>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="f" />
+     </onset>
+     <peak>
+      <phoneme name="a" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>name</definition>
+  </wordDef>
+  <wordDef subtype="" type="verb" name="faz" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="f" />
+     </onset>
+     <peak>
+      <phoneme name="a" />
+     </peak>
+     <coda>
+      <phoneme name="ʒ" />
+     </coda>
+    </syllable>
+   </phonology>
+   <definition>draw</definition>
+  </wordDef>
+  <wordDef subtype="" type="verb" name="fári" >
+   <phonology>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="f" />
+     </onset>
+     <peak>
+      <phoneme name="a" />
+     </peak>
+     <coda/>
+    </syllable>
+    <syllable>
+     <onset>
+      <phoneme name="ɾ" />
+     </onset>
+     <peak>
+      <phoneme name="i" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>eat</definition>
+  </wordDef>
+  <wordDef subtype="class -ri" type="noun" name="féa" >
+   <phonology>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="f" />
+     </onset>
+     <peak>
+      <phoneme name="e" />
+     </peak>
+     <coda/>
+    </syllable>
+    <syllable>
+     <onset/>
+     <peak>
+      <phoneme name="a" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>week</definition>
+  </wordDef>
+  <wordDef subtype="class -ra" type="coda-dropping noun" name="frés" >
+   <phonology>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="f" />
+      <phoneme name="ɾ" />
+     </onset>
+     <peak>
+      <phoneme name="e" />
+     </peak>
+     <coda>
+      <phoneme name="s" />
+     </coda>
+    </syllable>
+   </phonology>
+   <definition>sun</definition>
+  </wordDef>
+  <wordDef subtype="" type="number" name="fri" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="f" />
+      <phoneme name="ɾ" />
+     </onset>
+     <peak>
+      <phoneme name="i" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>six</definition>
+  </wordDef>
+  <wordDef subtype="class -ju" type="noun" name="sákir" >
+   <phonology>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="s" />
+     </onset>
+     <peak>
+      <phoneme name="a" />
+     </peak>
+     <coda/>
+    </syllable>
+    <syllable>
+     <onset>
+      <phoneme name="k" />
+     </onset>
+     <peak>
+      <phoneme name="i" />
+     </peak>
+     <coda>
+      <phoneme name="ɾ" />
+     </coda>
+    </syllable>
+   </phonology>
+   <definition>hand, paw/foot of ju-class animals</definition>
+  </wordDef>
+  <wordDef subtype="" type="suffix" name="saf" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="s" />
+     </onset>
+     <peak>
+      <phoneme name="a" />
+     </peak>
+     <coda>
+      <phoneme name="f" />
+     </coda>
+    </syllable>
+   </phonology>
+   <definition>without, lacking</definition>
+  </wordDef>
+  <wordDef subtype="" type="number" name="saf" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="s" />
+     </onset>
+     <peak>
+      <phoneme name="a" />
+     </peak>
+     <coda>
+      <phoneme name="f" />
+     </coda>
+    </syllable>
+   </phonology>
+   <definition>zero, nothing</definition>
+  </wordDef>
+  <wordDef subtype="class -ke" type="noun" name="samíth" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="s" />
+     </onset>
+     <peak>
+      <phoneme name="a" />
+     </peak>
+     <coda/>
+    </syllable>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="m" />
+     </onset>
+     <peak>
+      <phoneme name="i" />
+     </peak>
+     <coda>
+      <phoneme name="θ" />
+     </coda>
+    </syllable>
+   </phonology>
+   <definition>foot</definition>
+  </wordDef>
+  <wordDef subtype="" type="number" name="se" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="s" />
+     </onset>
+     <peak>
+      <phoneme name="e" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>four</definition>
+  </wordDef>
+  <wordDef subtype="class -ke" type="coda-dropping noun" name="sóhas" >
+   <phonology>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="s" />
+     </onset>
+     <peak>
+      <phoneme name="o" />
+     </peak>
+     <coda/>
+    </syllable>
+    <syllable>
+     <onset>
+      <phoneme name="h" />
+     </onset>
+     <peak>
+      <phoneme name="a" />
+     </peak>
+     <coda>
+      <phoneme name="s" />
+     </coda>
+    </syllable>
+   </phonology>
+   <definition>friend</definition>
+  </wordDef>
+  <wordDef subtype="class -tha" type="noun" name="sudlí" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="s" />
+     </onset>
+     <peak>
+      <phoneme name="u" />
+     </peak>
+     <coda/>
+    </syllable>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="d" />
+      <phoneme name="l" />
+     </onset>
+     <peak>
+      <phoneme name="i" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>chair, surface for sitting</definition>
+  </wordDef>
+  <wordDef subtype="" type="adverb" name="súxi" >
+   <phonology>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="s" />
+     </onset>
+     <peak>
+      <phoneme name="u" />
+     </peak>
+     <coda/>
+    </syllable>
+    <syllable>
+     <onset>
+      <phoneme name="ʃ" />
+     </onset>
+     <peak>
+      <phoneme name="i" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>future, in the future</definition>
+  </wordDef>
+  <wordDef subtype="" type="verb" name="slon" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="s" />
+      <phoneme name="l" />
+     </onset>
+     <peak>
+      <phoneme name="o" />
+     </peak>
+     <coda>
+      <phoneme name="n" />
+     </coda>
+    </syllable>
+   </phonology>
+   <definition>know, from experience or correct teaching</definition>
+  </wordDef>
+  <wordDef subtype="class -tha" type="noun" name="xárthe" >
+   <phonology>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="ʃ" />
+     </onset>
+     <peak>
+      <phoneme name="a" />
+     </peak>
+     <coda>
+      <phoneme name="ɾ" />
+     </coda>
+    </syllable>
+    <syllable>
+     <onset>
+      <phoneme name="θ" />
+     </onset>
+     <peak>
+      <phoneme name="e" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>house</definition>
+  </wordDef>
+  <wordDef subtype="" type="verb" name="xir" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="ʃ" />
+     </onset>
+     <peak>
+      <phoneme name="i" />
+     </peak>
+     <coda>
+      <phoneme name="ɾ" />
+     </coda>
+    </syllable>
+   </phonology>
+   <definition>think, be unsure of, believe wrongly</definition>
+  </wordDef>
+  <wordDef subtype="class -ya" type="noun" name="xúzhin" >
+   <phonology>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="ʃ" />
+     </onset>
+     <peak>
+      <phoneme name="u" />
+     </peak>
+     <coda>
+      <phoneme name="ʒ" />
+     </coda>
+    </syllable>
+    <syllable>
+     <onset>
+      <phoneme name="h" />
+     </onset>
+     <peak>
+      <phoneme name="i" />
+     </peak>
+     <coda>
+      <phoneme name="n" />
+     </coda>
+    </syllable>
+   </phonology>
+   <definition>Ádeyan name for the Syûzin culture</definition>
+  </wordDef>
+  <wordDef subtype="class -ra" type="noun" name="xún" >
+   <phonology>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="ʃ" />
+     </onset>
+     <peak>
+      <phoneme name="u" />
+     </peak>
+     <coda>
+      <phoneme name="n" />
+     </coda>
+    </syllable>
+   </phonology>
+   <definition>moon</definition>
+  </wordDef>
+  <wordDef subtype="" type="number" name="za" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="ʒ" />
+     </onset>
+     <peak>
+      <phoneme name="a" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>eight</definition>
+  </wordDef>
+  <wordDef subtype="class -ri" type="noun" name="zácin" >
+   <phonology>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="ʒ" />
+     </onset>
+     <peak>
+      <phoneme name="a" />
+     </peak>
+     <coda/>
+    </syllable>
+    <syllable>
+     <onset>
+      <phoneme name="ʧ" />
+     </onset>
+     <peak>
+      <phoneme name="i" />
+     </peak>
+     <coda>
+      <phoneme name="n" />
+     </coda>
+    </syllable>
+   </phonology>
+   <definition>tune, melody</definition>
+  </wordDef>
+  <wordDef subtype="class -ri" type="noun" name="zen" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="ʒ" />
+     </onset>
+     <peak>
+      <phoneme name="e" />
+     </peak>
+     <coda>
+      <phoneme name="n" />
+     </coda>
+    </syllable>
+   </phonology>
+   <definition>growth, rising</definition>
+  </wordDef>
+  <wordDef subtype="" type="verb" name="zen" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="ʒ" />
+     </onset>
+     <peak>
+      <phoneme name="e" />
+     </peak>
+     <coda>
+      <phoneme name="n" />
+     </coda>
+    </syllable>
+   </phonology>
+   <definition>grow</definition>
+  </wordDef>
+  <wordDef subtype="class -ya" type="coda-dropping noun" name="zíon" >
+   <phonology>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="ʒ" />
+     </onset>
+     <peak>
+      <phoneme name="i" />
+     </peak>
+     <coda/>
+    </syllable>
+    <syllable>
+     <onset/>
+     <peak>
+      <phoneme name="o" />
+     </peak>
+     <coda>
+      <phoneme name="n" />
+     </coda>
+    </syllable>
+   </phonology>
+   <definition>people, mundanity, mortality</definition>
+  </wordDef>
+  <wordDef subtype="" type="verb" name="zifjá" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="ʒ" />
+     </onset>
+     <peak>
+      <phoneme name="i" />
+     </peak>
+     <coda>
+      <phoneme name="f" />
+     </coda>
+    </syllable>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="ʤ" />
+     </onset>
+     <peak>
+      <phoneme name="a" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>want, desire</definition>
+  </wordDef>
+  <wordDef subtype="class -ri" type="noun" name="zúnem" >
+   <phonology>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="ʒ" />
+     </onset>
+     <peak>
+      <phoneme name="u" />
+     </peak>
+     <coda/>
+    </syllable>
+    <syllable>
+     <onset>
+      <phoneme name="n" />
+     </onset>
+     <peak>
+      <phoneme name="e" />
+     </peak>
+     <coda>
+      <phoneme name="m" />
+     </coda>
+    </syllable>
+   </phonology>
+   <definition>Syûzin boots</definition>
+  </wordDef>
+  <wordDef subtype="class -ya" type="noun" name="háde" >
+   <phonology>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="h" />
+     </onset>
+     <peak>
+      <phoneme name="a" />
+     </peak>
+     <coda/>
+    </syllable>
+    <syllable>
+     <onset>
+      <phoneme name="d" />
+     </onset>
+     <peak>
+      <phoneme name="e" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>desert</definition>
+  </wordDef>
+  <wordDef subtype="" type="verb" name="hémen" >
+   <phonology>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="h" />
+     </onset>
+     <peak>
+      <phoneme name="e" />
+     </peak>
+     <coda/>
+    </syllable>
+    <syllable>
+     <onset>
+      <phoneme name="m" />
+     </onset>
+     <peak>
+      <phoneme name="e" />
+     </peak>
+     <coda>
+      <phoneme name="n" />
+     </coda>
+    </syllable>
+   </phonology>
+   <definition>believe, know because of logical necessity</definition>
+  </wordDef>
+  <wordDef subtype="class -ra" type="noun" name="can" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="ʧ" />
+     </onset>
+     <peak>
+      <phoneme name="a" />
+     </peak>
+     <coda>
+      <phoneme name="n" />
+     </coda>
+    </syllable>
+   </phonology>
+   <definition>evergreen tree, spring</definition>
+  </wordDef>
+  <wordDef subtype="" type="adverb" name="céni" >
+   <phonology>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="ʧ" />
+     </onset>
+     <peak>
+      <phoneme name="e" />
+     </peak>
+     <coda/>
+    </syllable>
+    <syllable>
+     <onset>
+      <phoneme name="n" />
+     </onset>
+     <peak>
+      <phoneme name="i" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>here, near me</definition>
+  </wordDef>
+  <wordDef subtype="" type="adverb" name="ciké" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="ʧ" />
+     </onset>
+     <peak>
+      <phoneme name="i" />
+     </peak>
+     <coda/>
+    </syllable>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="k" />
+     </onset>
+     <peak>
+      <phoneme name="e" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>past, in the past, long ago</definition>
+  </wordDef>
+  <wordDef subtype="" type="number" name="cu" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="ʧ" />
+     </onset>
+     <peak>
+      <phoneme name="u" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>five</definition>
+  </wordDef>
+  <wordDef subtype="class -ri" type="noun" name="cun" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="ʧ" />
+     </onset>
+     <peak>
+      <phoneme name="u" />
+     </peak>
+     <coda>
+      <phoneme name="n" />
+     </coda>
+    </syllable>
+   </phonology>
+   <definition>war</definition>
+  </wordDef>
+  <wordDef subtype="" type="postposition" name="jál" >
+   <phonology>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="ʤ" />
+     </onset>
+     <peak>
+      <phoneme name="a" />
+     </peak>
+     <coda>
+      <phoneme name="l" />
+     </coda>
+    </syllable>
+   </phonology>
+   <definition>for the purpose of, for the benefit of</definition>
+  </wordDef>
+  <wordDef subtype="class -ke" type="noun" name="jéth" >
+   <phonology>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="ʤ" />
+     </onset>
+     <peak>
+      <phoneme name="e" />
+     </peak>
+     <coda>
+      <phoneme name="θ" />
+     </coda>
+    </syllable>
+   </phonology>
+   <definition>cat</definition>
+  </wordDef>
+  <wordDef subtype="" type="classifier" name="ju" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="ʤ" />
+     </onset>
+     <peak>
+      <phoneme name="u" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>relating to small, fast, agile animals</definition>
+  </wordDef>
+  <wordDef subtype="class -ri" type="noun" name="ná" >
+   <phonology>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="n" />
+     </onset>
+     <peak>
+      <phoneme name="a" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>falling, descent</definition>
+  </wordDef>
+  <wordDef subtype="class -fi" type="noun" name="námur" >
+   <phonology>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="n" />
+     </onset>
+     <peak>
+      <phoneme name="a" />
+     </peak>
+     <coda/>
+    </syllable>
+    <syllable>
+     <onset>
+      <phoneme name="m" />
+     </onset>
+     <peak>
+      <phoneme name="u" />
+     </peak>
+     <coda>
+      <phoneme name="ɾ" />
+     </coda>
+    </syllable>
+   </phonology>
+   <definition>lie</definition>
+  </wordDef>
+  <wordDef subtype="" type="postposition" name="ne" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="n" />
+     </onset>
+     <peak>
+      <phoneme name="e" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>of, from</definition>
+  </wordDef>
+  <wordDef subtype="" type="adjective" name="néthe" >
+   <phonology>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="n" />
+     </onset>
+     <peak>
+      <phoneme name="e" />
+     </peak>
+     <coda/>
+    </syllable>
+    <syllable>
+     <onset>
+      <phoneme name="θ" />
+     </onset>
+     <peak>
+      <phoneme name="e" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>light (of weight)</definition>
+  </wordDef>
+  <wordDef subtype="class -ya" type="noun" name="nído" >
+   <phonology>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="n" />
+     </onset>
+     <peak>
+      <phoneme name="i" />
+     </peak>
+     <coda/>
+    </syllable>
+    <syllable>
+     <onset>
+      <phoneme name="d" />
+     </onset>
+     <peak>
+      <phoneme name="o" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>world, land</definition>
+  </wordDef>
+  <wordDef subtype="" type="adverb" name="nísi" >
+   <phonology>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="n" />
+     </onset>
+     <peak>
+      <phoneme name="i" />
+     </peak>
+     <coda/>
+    </syllable>
+    <syllable>
+     <onset>
+      <phoneme name="s" />
+     </onset>
+     <peak>
+      <phoneme name="i" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>over there, near him/her</definition>
+  </wordDef>
+  <wordDef subtype="class -ke" type="coda-dropping noun" name="nílsith" >
+   <phonology>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="n" />
+     </onset>
+     <peak>
+      <phoneme name="i" />
+     </peak>
+     <coda>
+      <phoneme name="l" />
+     </coda>
+    </syllable>
+    <syllable>
+     <onset>
+      <phoneme name="s" />
+     </onset>
+     <peak>
+      <phoneme name="i" />
+     </peak>
+     <coda>
+      <phoneme name="θ" />
+     </coda>
+    </syllable>
+   </phonology>
+   <definition>hair</definition>
+  </wordDef>
+  <wordDef subtype="class -yen" type="noun" name="núyo" >
+   <phonology>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="n" />
+     </onset>
+     <peak>
+      <phoneme name="u" />
+     </peak>
+     <coda/>
+    </syllable>
+    <syllable>
+     <onset>
+      <phoneme name="j" />
+     </onset>
+     <peak>
+      <phoneme name="o" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>mother</definition>
+  </wordDef>
+  <wordDef subtype="" type="postposition" name="ma" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="m" />
+     </onset>
+     <peak>
+      <phoneme name="a" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>behind</definition>
+  </wordDef>
+  <wordDef subtype="" type="particle verb" name="me" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="m" />
+     </onset>
+     <peak>
+      <phoneme name="e" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>question-marker</definition>
+  </wordDef>
+  <wordDef subtype="" type="adjective" name="mejú" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="m" />
+     </onset>
+     <peak>
+      <phoneme name="e" />
+     </peak>
+     <coda/>
+    </syllable>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="ʤ" />
+     </onset>
+     <peak>
+      <phoneme name="u" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>small</definition>
+  </wordDef>
+  <wordDef subtype="class -ke" type="noun" name="mogé" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="m" />
+     </onset>
+     <peak>
+      <phoneme name="o" />
+     </peak>
+     <coda/>
+    </syllable>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="g" />
+     </onset>
+     <peak>
+      <phoneme name="e" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>leg</definition>
+  </wordDef>
+  <wordDef subtype="" type="adjective" name="mostá" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="m" />
+     </onset>
+     <peak>
+      <phoneme name="o" />
+     </peak>
+     <coda>
+      <phoneme name="s" />
+     </coda>
+    </syllable>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="t" />
+     </onset>
+     <peak>
+      <phoneme name="a" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>cheap</definition>
+  </wordDef>
+  <wordDef subtype="" type="classifier" name="ya" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="j" />
+     </onset>
+     <peak>
+      <phoneme name="a" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>relating to groups, categories, cultural ideosyncrasies, etc.</definition>
+  </wordDef>
+  <wordDef subtype="" type="suffix" name="yan" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="j" />
+     </onset>
+     <peak>
+      <phoneme name="a" />
+     </peak>
+     <coda>
+      <phoneme name="n" />
+     </coda>
+    </syllable>
+   </phonology>
+   <definition>above, before, earlier than</definition>
+  </wordDef>
+  <wordDef subtype="" type="postposition" name="yan" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="j" />
+     </onset>
+     <peak>
+      <phoneme name="a" />
+     </peak>
+     <coda>
+      <phoneme name="n" />
+     </coda>
+    </syllable>
+   </phonology>
+   <definition>above, before, earlier than</definition>
+  </wordDef>
+  <wordDef subtype="" type="classifier" name="yen" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="j" />
+     </onset>
+     <peak>
+      <phoneme name="e" />
+     </peak>
+     <coda>
+      <phoneme name="n" />
+     </coda>
+    </syllable>
+   </phonology>
+   <definition>relating to human beings, human lifespans, etc.</definition>
+  </wordDef>
+  <wordDef subtype="" type="verb" name="yibér" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="j" />
+     </onset>
+     <peak>
+      <phoneme name="i" />
+     </peak>
+     <coda/>
+    </syllable>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="b" />
+     </onset>
+     <peak>
+      <phoneme name="e" />
+     </peak>
+     <coda>
+      <phoneme name="ɾ" />
+     </coda>
+    </syllable>
+   </phonology>
+   <definition>sleep</definition>
+  </wordDef>
+  <wordDef subtype="class -ke" type="noun" name="yíc" >
+   <phonology>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="j" />
+     </onset>
+     <peak>
+      <phoneme name="i" />
+     </peak>
+     <coda>
+      <phoneme name="ʧ" />
+     </coda>
+    </syllable>
+   </phonology>
+   <definition>ear</definition>
+  </wordDef>
+  <wordDef subtype="" type="verb" name="yíc" >
+   <phonology>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="j" />
+     </onset>
+     <peak>
+      <phoneme name="i" />
+     </peak>
+     <coda>
+      <phoneme name="ʧ" />
+     </coda>
+    </syllable>
+   </phonology>
+   <definition>hear</definition>
+  </wordDef>
+  <wordDef subtype="" type="adverb" name="lará" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="l" />
+     </onset>
+     <peak>
+      <phoneme name="a" />
+     </peak>
+     <coda/>
+    </syllable>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="ɾ" />
+     </onset>
+     <peak>
+      <phoneme name="a" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>already</definition>
+  </wordDef>
+  <wordDef subtype="" type="verb" name="len" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="l" />
+     </onset>
+     <peak>
+      <phoneme name="e" />
+     </peak>
+     <coda>
+      <phoneme name="n" />
+     </coda>
+    </syllable>
+   </phonology>
+   <definition>see</definition>
+  </wordDef>
+  <wordDef subtype="class -ke" type="noun" name="len" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="l" />
+     </onset>
+     <peak>
+      <phoneme name="e" />
+     </peak>
+     <coda>
+      <phoneme name="n" />
+     </coda>
+    </syllable>
+   </phonology>
+   <definition>eye(s)</definition>
+  </wordDef>
+  <wordDef subtype="class -ju" type="noun" name="lída" >
+   <phonology>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="l" />
+     </onset>
+     <peak>
+      <phoneme name="i" />
+     </peak>
+     <coda/>
+    </syllable>
+    <syllable>
+     <onset>
+      <phoneme name="d" />
+     </onset>
+     <peak>
+      <phoneme name="a" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>mouse</definition>
+  </wordDef>
+  <wordDef subtype="" type="adjective" name="lirún" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="l" />
+     </onset>
+     <peak>
+      <phoneme name="i" />
+     </peak>
+     <coda/>
+    </syllable>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="ɾ" />
+     </onset>
+     <peak>
+      <phoneme name="u" />
+     </peak>
+     <coda>
+      <phoneme name="n" />
+     </coda>
+    </syllable>
+   </phonology>
+   <definition>expensive</definition>
+  </wordDef>
+  <wordDef subtype="" type="suffix" name="lo" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="l" />
+     </onset>
+     <peak>
+      <phoneme name="o" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>full, complete</definition>
+  </wordDef>
+  <wordDef subtype="" type="verb" name="lúnye" >
+   <phonology>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="l" />
+     </onset>
+     <peak>
+      <phoneme name="u" />
+     </peak>
+     <coda>
+      <phoneme name="n" />
+     </coda>
+    </syllable>
+    <syllable>
+     <onset>
+      <phoneme name="j" />
+     </onset>
+     <peak>
+      <phoneme name="e" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>make noise</definition>
+  </wordDef>
+  <wordDef subtype="" type="classifier" name="ra" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="ɾ" />
+     </onset>
+     <peak>
+      <phoneme name="a" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>relating to natural forces, gods, uncontrollable events, etc.</definition>
+  </wordDef>
+  <wordDef subtype="class -ra" type="noun" name="rámen" >
+   <phonology>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="ɾ" />
+     </onset>
+     <peak>
+      <phoneme name="a" />
+     </peak>
+     <coda/>
+    </syllable>
+    <syllable>
+     <onset>
+      <phoneme name="m" />
+     </onset>
+     <peak>
+      <phoneme name="e" />
+     </peak>
+     <coda>
+      <phoneme name="n" />
+     </coda>
+    </syllable>
+   </phonology>
+   <definition>nature</definition>
+  </wordDef>
+  <wordDef subtype="" type="number" name="re" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="ɾ" />
+     </onset>
+     <peak>
+      <phoneme name="e" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>three</definition>
+  </wordDef>
+  <wordDef subtype="" type="suffix" name="ref" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="ɾ" />
+     </onset>
+     <peak>
+      <phoneme name="e" />
+     </peak>
+     <coda>
+      <phoneme name="f" />
+     </coda>
+    </syllable>
+   </phonology>
+   <definition>below, after, later than</definition>
+  </wordDef>
+  <wordDef subtype="" type="postposition" name="ref" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="ɾ" />
+     </onset>
+     <peak>
+      <phoneme name="e" />
+     </peak>
+     <coda>
+      <phoneme name="f" />
+     </coda>
+    </syllable>
+   </phonology>
+   <definition>below, after, later than</definition>
+  </wordDef>
+  <wordDef subtype="" type="classifier" name="ri" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="ɾ" />
+     </onset>
+     <peak>
+      <phoneme name="i" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>relating to seasons, cycles, repetition, etc.</definition>
+  </wordDef>
+  <wordDef subtype="" type="verb" name="rin" >
+   <phonology>
+    <syllable>
+     <onset>
+      <phoneme name="ɾ" />
+     </onset>
+     <peak>
+      <phoneme name="i" />
+     </peak>
+     <coda>
+      <phoneme name="n" />
+     </coda>
+    </syllable>
+   </phonology>
+   <definition>be, exist</definition>
+  </wordDef>
+  <wordDef subtype="class -ri" type="noun" name="rína" >
+   <phonology>
+    <syllable bSupra="stress" >
+     <onset>
+      <phoneme name="ɾ" />
+     </onset>
+     <peak>
+      <phoneme name="i" />
+     </peak>
+     <coda/>
+    </syllable>
+    <syllable>
+     <onset>
+      <phoneme name="n" />
+     </onset>
+     <peak>
+      <phoneme name="a" />
+     </peak>
+     <coda/>
+    </syllable>
+   </phonology>
+   <definition>month</definition>
+  </wordDef>
+ </wordList>
+</conlang>

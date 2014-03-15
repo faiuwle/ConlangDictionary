@@ -142,6 +142,10 @@ void Dictionary::setValue (QString key, QString value)  {
     wordPage->setLanguageName (value);
 }
 
+QString Dictionary::getValue (QString key)  {
+  return db.getValue (key);
+}
+
 void Dictionary::setDB ()  {
   phonologyPage->setDB (db);
   suprasegmentalsPage->setDB (db);
