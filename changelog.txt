@@ -1,4 +1,13 @@
+Version 0.4
++ New morpheme tab for morphemes.
+  + new SQL schema
+  + update databases of old savefiles
+  + morpheme page
+
 Version 0.3
++ Lexique Pro input and output
+
+3/15/14
 - Massive backend overhaul: now uses local SQLite database.
 - Search is on the word tab now.
 - Phonemes now have features; words have features instead of type/subtype.
