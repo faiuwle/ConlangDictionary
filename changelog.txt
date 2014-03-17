@@ -6,6 +6,8 @@ Version 0.4
 
 Version 0.3
 + Lexique Pro input and output
+
+3/17/14
 - Adding a phoneme now also adds a default spelling.
 - Word tab is now alphabetical.
 - Fixed bug with word tab not updating things correctly.
