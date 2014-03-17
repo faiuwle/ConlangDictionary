@@ -4,3 +4,4 @@ moc_*.*
 *.cdic
 *.features
 *.txt
+cd.config
