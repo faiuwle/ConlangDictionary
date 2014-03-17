@@ -7,6 +7,9 @@ Version 0.4
 Version 0.3
 + Lexique Pro input and output
 - Adding a phoneme now also adds a default spelling.
+- Word tab is now alphabetical.
+- Fixed bug with word tab not updating things correctly.
+- Fixed bug with editing features not resulting in parses afterwards.
 
 3/15/14
 - Massive backend overhaul: now uses local SQLite database.

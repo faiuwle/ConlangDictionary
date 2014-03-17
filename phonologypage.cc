@@ -416,6 +416,7 @@ void PhonologyPage::launchNaturalClassesDialog ()  {
   
   connect (featureBundlesDialog, SIGNAL (done ()), this, SLOT (updateNCModel ()));
   connect (featureBundlesDialog, SIGNAL (done ()), this, SIGNAL (naturalClassListUpdated ()));
+  connect (featureBundlesDialog, SIGNAL (done ()), this, SIGNAL (spellingsChanged ()));
   
   featureBundlesDialog->show ();
 }
@@ -438,6 +439,7 @@ void PhonologyPage::launchEditFeaturesDialog ()  {
   featureBundlesDialog = new FeatureBundlesDialog (PHONEME, currentPhonID, db);
   
   connect (featureBundlesDialog, SIGNAL (done ()), this, SLOT (displayPhoneme ()));
+  connect (featureBundlesDialog, SIGNAL (done ()), this, SIGNAL (spellingsChanged ()));
   
   featureBundlesDialog->show ();
 }

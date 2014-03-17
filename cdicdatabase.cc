@@ -162,6 +162,7 @@ bool CDICDatabase::loadFromText (QString filename, QString pattern)  {
   pattern.replace ("/c", "(.+)");
   pattern.replace ("/d", "(.+)");
   QRegExp regExp (pattern);
+  regExp.setMinimal (true);
 
   QFile file (filename);
   QTextStream in (&file);
@@ -1357,7 +1358,7 @@ QSqlQueryModel *CDICDatabase::getWordListModel ()  {
   if (!db.isOpen ()) return NULL;
   
   QSqlQueryModel *model = new QSqlQueryModel (NULL);
-  model->setQuery ("select id, name, classlist from WordPageTable", db);
+  model->setQuery ("select id, name, classlist from WordPageTable order by name", db);
   
   return model;
 }
@@ -1367,7 +1368,7 @@ void CDICDatabase::searchWordList (QSqlQueryModel *model, QString search,
   if (!model) return;
   
   if (search == "" && (className == "" || className == "Any Word Type"))  {
-    model->setQuery ("select id, name, classlist from WordPageTable");
+    model->setQuery ("select id, name, classlist from WordPageTable order by name");
     return;
   }
   
@@ -1381,14 +1382,16 @@ void CDICDatabase::searchWordList (QSqlQueryModel *model, QString search,
                    (QString)"where exists " +
                      "(select * from WordClassList " +
                       "where WordClassList.id == WordPageTable.id and " +
-                            "WordClassList.class = :class)");
+                            "WordClassList.class = :class) " +
+                   "order by name");
     query.bindValue (":class", className);
   }
   
   else if ((className == "" || className == "Any Word Type") && 
            languageName != "English")  {
     query.prepare ("select id, name, classlist from WordPageTable " +
-                  (QString)"where name like :search");
+                  (QString)"where name like :search " +
+                  "order by name");
     query.bindValue (":search", search);
   }
                   
@@ -1397,7 +1400,8 @@ void CDICDatabase::searchWordList (QSqlQueryModel *model, QString search,
                    "where name like :search and exists " +
                      "(select * from WordClassList " +
                       "where WordClassList.id == WordPageTable.id and " +
-                            "WordClassList.class == :class)");
+                            "WordClassList.class == :class) " +
+                   "order by name");
     query.bindValue (":search", search);
     query.bindValue (":class", className);
   }
@@ -1406,7 +1410,8 @@ void CDICDatabase::searchWordList (QSqlQueryModel *model, QString search,
            languageName == "English")  {
     query.prepare ("select Word.id, Word.name, classlist from Word, WordPageTable " +
                    (QString)"where Word.id == WordPageTable.id and " +
-                   "definition like :search");
+                                  "definition like :search " +
+                   "order by name");
     query.bindValue (":search", search);
   }
   
@@ -1416,7 +1421,8 @@ void CDICDatabase::searchWordList (QSqlQueryModel *model, QString search,
                    "definition like :search and exists " +
                      "(select * from WordClassList " +
                       "where WordClassList.id == WordPageTable.id and " +
-                            "WordClassList.class == :class)");
+                            "WordClassList.class == :class) " +
+                      "order by name");
     query.bindValue (":search", search);
     query.bindValue (":class", className);
   }
@@ -1437,7 +1443,7 @@ QSqlTableModel *CDICDatabase::getWordDisplayModel ()  {
   
   QSqlTableModel *model = new QSqlTableModel (NULL, db);
   model->setTable ("Word");
-  model->setSort (0, Qt::AscendingOrder);
+  model->setSort (1, Qt::AscendingOrder);
   model->setEditStrategy (QSqlTableModel::OnManualSubmit);
   model->select ();
   

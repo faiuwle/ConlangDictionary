@@ -297,7 +297,7 @@ void WordPage::displayWord ()  {
   int row = wordView->selectionModel ()->currentIndex ().row ();
   int currentID = wordModel->record (row).value ("id").toInt ();
   
-  mapper->setCurrentIndex (currentID);
+  mapper->setCurrentIndex (row);
   
   phonologyDisplay->setText (db.getRepresentation (currentID));
   naturalClassDisplay->setText ("<b>" + db.getClassList (WORD, currentID).join (", ") + "</b>");
@@ -422,7 +422,10 @@ void WordPage::launchEditPhonologyDialog ()  {
     return;
   }
   
-  editPhonologyDialog = new EditPhonologyDialog (db, mapper->currentIndex ());
+  int row = wordView->selectionModel ()->currentIndex ().row ();
+  int currentID = wordModel->record (row).value ("id").toInt ();
+  
+  editPhonologyDialog = new EditPhonologyDialog (db, currentID);
   
   connect (editPhonologyDialog, SIGNAL (done ()), this, SLOT (displayWord ()));
   
@@ -431,7 +434,9 @@ void WordPage::launchEditPhonologyDialog ()  {
 
 void WordPage::parseWord ()  {
   submitChanges ();
-  parseWord (mapper->currentIndex ());
+  int row = wordView->selectionModel ()->currentIndex ().row ();
+  int currentID = wordModel->record (row).value ("id").toInt ();
+  parseWord (currentID);
   displayWord ();
 }
 
