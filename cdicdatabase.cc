@@ -758,20 +758,43 @@ void CDICDatabase::addPhoneme (QString name, QString notes)  {
     nextAlpha = query.value (0).toInt ();
   
   query.finish ();
-  
-  QTextStream terminal (stdout);
-  
-  terminal << "Adding phoneme: " << nextAlpha << ", " << name << ", " << notes << endl;
-  
+
   query.prepare ("insert into Phoneme values (null, :alpha, :name, :notes)");
   query.bindValue (":alpha", nextAlpha);
   query.bindValue (":name", name);
   query.bindValue (":notes", notes);
   
-  if (!query.exec ())
+  if (!query.exec ())  {
     QUERY_ERROR(query)
+    query.finish ();
+    return;
+  }
   
   query.finish ();
+  
+  query.prepare ("select max(id) from Phoneme");
+  
+  if (!query.exec ())  {
+    QUERY_ERROR(query)
+    query.finish ();
+    return;
+  }
+  
+  int id = 0;
+  if (query.next ())
+    id = query.value (0).toInt ();
+  
+  query.finish ();
+  
+  query.prepare ("insert into PhonemeSpelling values (:id, :name)");
+  query.bindValue (":id", id);
+  query.bindValue (":name", name);
+  
+  if (!query.exec ())
+    QUERY_ERROR(query)
+    
+  query.finish ();
+  
   return;
 }
 

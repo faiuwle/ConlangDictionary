@@ -6,6 +6,7 @@ Version 0.4
 
 Version 0.3
 + Lexique Pro input and output
+- Adding a phoneme now also adds a default spelling.
 
 3/15/14
 - Massive backend overhaul: now uses local SQLite database.
