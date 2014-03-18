@@ -1443,7 +1443,7 @@ QSqlTableModel *CDICDatabase::getWordDisplayModel ()  {
   
   QSqlTableModel *model = new QSqlTableModel (NULL, db);
   model->setTable ("Word");
-  model->setSort (1, Qt::AscendingOrder);
+  model->setSort (0, Qt::AscendingOrder);
   model->setEditStrategy (QSqlTableModel::OnManualSubmit);
   model->select ();
   

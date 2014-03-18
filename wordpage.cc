@@ -296,8 +296,8 @@ void WordPage::displayWord ()  {
   
   int row = wordView->selectionModel ()->currentIndex ().row ();
   int currentID = wordModel->record (row).value ("id").toInt ();
-  
-  mapper->setCurrentIndex (row);
+
+  mapper->setCurrentIndex (currentID - 1);
   
   phonologyDisplay->setText (db.getRepresentation (currentID));
   naturalClassDisplay->setText ("<b>" + db.getClassList (WORD, currentID).join (", ") + "</b>");
