@@ -198,7 +198,7 @@ void WordPage::setDB (CDICDatabase database)  {
   mapper->setModel (displayModel);
   mapper->setSubmitPolicy (QDataWidgetMapper::ManualSubmit);
   mapper->addMapping (spellingEdit, 1);
-  mapper->addMapping (definitionEdit, 2);
+//  mapper->addMapping (definitionEdit, 2);
   mapper->toFirst ();
   
   if (dModel)  {
@@ -302,6 +302,7 @@ void WordPage::displayWord ()  {
   phonologyDisplay->setText (db.getRepresentation (currentID));
   naturalClassDisplay->setText ("<b>" + db.getClassList (WORD, currentID).join (", ") + "</b>");
   featuresDisplay->setText ("Features:\n[" + db.getBundledFeatures (WORD, currentID).join (", ") + "]");
+  definitionEdit->setText (db.getDefinition (currentID));
   submitButton->setEnabled (false);
 }
 
@@ -346,6 +347,7 @@ void WordPage::submitChanges ()  {
   
   mapper->submit ();
   displayModel->submitAll ();
+  db.setDefinition (definitionEdit->toPlainText (), currentID);
   
   updateModels ();
   

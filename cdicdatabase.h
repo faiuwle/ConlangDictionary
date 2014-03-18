@@ -81,6 +81,8 @@ class CDICDatabase {
     QString getRepresentation (int);
     QList<Syllable> getPhonology (int);
     int getNumberOfWords ();
+    void setDefinition (QString, int);
+    QString getDefinition (int);
     
     // for word parsing
     QList< QList<QStringList> > getPhonotacticSequenceList (int);

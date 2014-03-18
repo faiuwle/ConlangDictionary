@@ -2063,6 +2063,41 @@ int CDICDatabase::getNumberOfWords ()  {
   return num;
 }
 
+void CDICDatabase::setDefinition (QString def, int wordID)  {
+  if (!db.isOpen ()) return;
+  
+  QSqlQuery query (db);
+  query.prepare ("update Word set definition = :def where id == :id");
+  query.bindValue (":def", def);
+  query.bindValue (":id", wordID);
+  
+  if (!query.exec ())
+    QUERY_ERROR(query)
+    
+  query.finish ();
+  return;
+}
+
+QString CDICDatabase::getDefinition (int wordID)  {
+  if (!db.isOpen ()) return "";
+  
+  QSqlQuery query (db);
+  query.prepare ("select definition from Word where id == :id");
+  query.bindValue (":id", wordID);
+  
+  if (!query.exec ())  {
+    QUERY_ERROR(query)
+    query.finish ();
+    return "";
+  }
+  
+  QString def = "";
+  if (query.next ())
+    def = query.value (0).toString ();
+  
+  return def;
+}
+
 QList< QList<QStringList> > CDICDatabase::getPhonotacticSequenceList (int loc)  {
   if (!db.isOpen ()) return QList< QList<QStringList> > ();
   

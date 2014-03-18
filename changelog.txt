@@ -7,11 +7,11 @@ Version 0.4
 Version 0.3
 + Lexique Pro input and output
 - Fixed bug where searching on the word tab would mess up the display.
-- Now allows contextual representations.
+- Now allows contextual spelling representations.
 - Accents can now replace other accents.
 - Spaces are now ignored automatically by the parser.
 - Edit phonology dialog now allows you to edit previous syllables.
-+ Program will no longer create formatted text in the database you will have
+- Program will no longer create formatted text in the database you will have
   to retype anything that already outputs formatting, though).
 - Word page now behaves properly when you update the phonology of a word.
 - Unbroke text importing.
