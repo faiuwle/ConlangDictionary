@@ -418,7 +418,10 @@ void WordPage::launchEditFeaturesDialog ()  {
     return;
   }
   
-  featureBundlesDialog = new FeatureBundlesDialog (WORD, mapper->currentIndex (), db);
+  int row = wordView->selectionModel ()->currentIndex ().row ();
+  int currentID = wordModel->record (row).value ("id").toInt ();
+  
+  featureBundlesDialog = new FeatureBundlesDialog (WORD, currentID, db);
   
   connect (featureBundlesDialog, SIGNAL (done ()), this, SLOT (updateAfterFeatureChange ()));
   

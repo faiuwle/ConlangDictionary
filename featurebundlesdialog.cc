@@ -147,6 +147,8 @@ void FeatureBundlesDialog::initFeatureSetDialog ()  {
     label += (sb == "true") ? "]" : "/";
   }
   
+  else label += db.getWordName (id);
+  
   titleLabel = new QLabel ("<big><b>" + label + "</b></big>");
   titleLabel->setAlignment (Qt::AlignCenter);
   
