@@ -31,6 +31,7 @@ class MainWindow : public QMainWindow {
     void exportWordFeatures ();
     
     void clearDictionary ();
+    void clearWordlist ();
     void quit ();
     
     void setFont ();
@@ -69,6 +70,7 @@ class MainWindow : public QMainWindow {
     QAction *exportWordFeaturesAct;
     
     QAction *clearAct;
+    QAction *clearWordsAct;
     QAction *quitAct;
     
     QAction *fontAct;

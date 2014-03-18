@@ -31,6 +31,7 @@ class Dictionary : public QTabWidget {
     void saveText (QString, QString);
     void saveFeatures (int, QString);
     bool clearDictionary ();
+    bool clearWordlist ();
     
     void setValue (QString, QString);
     QString getValue (QString);

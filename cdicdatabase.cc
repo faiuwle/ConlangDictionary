@@ -95,7 +95,18 @@ void CDICDatabase::clear ()  {
   if (!readSQLFile ("clear.sql"))
     db.rollback ();
   
-  db.commit ();
+  else db.commit ();
+}
+
+void CDICDatabase::clearWordlist ()  {
+  if (!db.isOpen ()) return;
+  
+  db.transaction ();
+  
+  if (!readSQLFile ("clearwords.sql"))
+    db.rollback ();
+  
+  else db.commit ();
 }
 
 QString CDICDatabase::currentDB ()  {

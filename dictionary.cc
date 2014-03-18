@@ -133,6 +133,20 @@ bool Dictionary::clearDictionary ()  {
   return true;
 }
 
+bool Dictionary::clearWordlist ()  {
+  if (db.currentDB ().isEmpty ()) return false;
+  
+  if (QMessageBox::question (this, "Clear Wordlist?",
+                             "Do you really want to delete all words in the wordlist?",
+                             QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
+    return false;
+  
+  db.clearWordlist ();
+  updateModels ();
+  
+  return true;
+}
+
 void Dictionary::setValue (QString key, QString value)  {
   if (value.isNull ()) value = "";
   

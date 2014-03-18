@@ -17,6 +17,8 @@ Version 0.3
   to retype anything that already outputs formatting, though).
 - Word page now behaves properly when you update the phonology of a word.
 - Unbroke text importing.
+- It is now possible to clear just the wordlist instead of the whole 
+  dictionary.
 
 3/17/14
 - Adding a phoneme now also adds a default spelling.

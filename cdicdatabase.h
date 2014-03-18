@@ -24,6 +24,7 @@ class CDICDatabase {
     bool open (QString);
     void close ();
     void clear ();
+    void clearWordlist ();
     
     QString currentDB ();
     

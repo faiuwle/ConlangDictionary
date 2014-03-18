@@ -124,7 +124,7 @@ PhonotacticsPage::PhonotacticsPage ()  {
   reanalyzeButton = new QPushButton ("Reanalyze Lexicon");
   progressBar = new QProgressBar;
   progressBar->setMinimum (0);
-  progressBar->setMaximum (0);
+  progressBar->setMaximum (1);
   progressBar->setValue (0);
   
   mainLayout = new QVBoxLayout;

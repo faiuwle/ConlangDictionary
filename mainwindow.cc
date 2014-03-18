@@ -203,6 +203,10 @@ void MainWindow::clearDictionary ()  {
   dictionary->clearDictionary ();
 }
 
+void MainWindow::clearWordlist ()  {
+  dictionary->clearWordlist ();
+}
+
 void MainWindow::quit ()  {
   dictionary->closeDB ();
   close ();
@@ -328,6 +332,10 @@ void MainWindow::createActions ()  {
   clearAct->setStatusTip ("Clear all dictionary data");
   connect (clearAct, SIGNAL (triggered ()), this, SLOT (clearDictionary ()));
   
+  clearWordsAct = new QAction ("Clear Wordlist", this);
+  clearWordsAct->setStatusTip ("Clear just the wordlist");
+  connect (clearWordsAct, SIGNAL (triggered ()), this, SLOT (clearWordlist ()));
+  
   quitAct = new QAction ("&Quit", this);
   quitAct->setShortcuts (QKeySequence::Quit);
   quitAct->setStatusTip ("Exit the application");
@@ -374,6 +382,7 @@ void MainWindow::createMenus ()  {
   exportMenu->addAction (exportWordFeaturesAct);
   
   fileMenu->addAction (clearAct);
+  fileMenu->addAction (clearWordsAct);
   fileMenu->addSeparator ();
   fileMenu->addAction (quitAct);
   
