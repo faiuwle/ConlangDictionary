@@ -311,7 +311,8 @@ void WordPage::updateAfterFeatureChange ()  {
   updateModels ();
   
   if (index.isValid ())
-    wordView->selectionModel ()->setCurrentIndex (index, QItemSelectionModel::Select);
+    wordView->selectionModel ()->setCurrentIndex (index, QItemSelectionModel::SelectCurrent |
+                                                         QItemSelectionModel::Rows);
 }
 
 void WordPage::applyNaturalClass ()  {
@@ -323,6 +324,7 @@ void WordPage::applyNaturalClass ()  {
     db.assignNaturalClass (assignNaturalClassBox->currentText (), id);
   }
   
+  updateAfterFeatureChange ();
   displayWord ();
 }
 

@@ -162,7 +162,7 @@ bool CDICDatabase::loadFromText (QString filename, QString pattern)  {
   pattern.replace ("/c", "(.+)");
   pattern.replace ("/d", "(.+)");
   QRegExp regExp (pattern);
-  regExp.setMinimal (true);
+//  regExp.setMinimal (true);
 
   QFile file (filename);
   QTextStream in (&file);
@@ -176,9 +176,10 @@ bool CDICDatabase::loadFromText (QString filename, QString pattern)  {
 
     if (line == "") continue;
 
-    if (!regExp.exactMatch (line)) continue;
+    if (!regExp.exactMatch (line))
+      continue;
     
-    int wordID = 0;
+    int wordID = 1;
     
     QSqlQuery query (db);
     query.prepare ("select max(id) from Word");
