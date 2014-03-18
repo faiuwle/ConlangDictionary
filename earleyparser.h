@@ -9,6 +9,7 @@
 typedef struct Rule_s  {
   QString lhs;
   QStringList rhs;
+  QString context;
 } Rule;
 
 typedef struct BackPointer_s  {
@@ -23,12 +24,14 @@ typedef struct ChartItem_s  {
   int start;
   int end;
   QList<BackPointer> backPointers;
+  QString context;
 } ChartItem;
 
 typedef struct TreeNode_s  {
   QString label;
   QList<struct TreeNode_s> children;
   QString payload;
+  bool context;
 } TreeNode;
 
 class EarleyParser  {
@@ -50,10 +53,11 @@ class EarleyParser  {
     
     TreeNode getTreeNode (int, int);
     int countCodas (TreeNode);
+    int countContexts (TreeNode);
     
     void runPredictor (int, int);
-    void runScanner (int, int, QString);
-    void runCompleter (int, int);
+    void runScanner (int, int, QString, QString);
+    void runCompleter (int, int, QString);
     
     void printRule (Rule);
     void printChart ();

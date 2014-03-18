@@ -2686,6 +2686,12 @@ QList<Rule> CDICDatabase::getParsingGrammar ()  {
   while (query.next ())  {
     QString phoneme = query.value (0).toString ();
     QString spelling = query.value (1).toString ();
+    QString context = "";
+    
+    if (spelling.contains ("|"))  {
+      context = spelling.split ('|')[1];
+      spelling = spelling.split ('|')[0];
+    }
     
     for (int x = 0; x < diacriticSupraList.size (); x++)
       if (diacriticSupraList[x].applicablePhonemes.contains (phoneme) ||
@@ -2699,6 +2705,7 @@ QList<Rule> CDICDatabase::getParsingGrammar ()  {
         Rule rule;
         rule.lhs = "Phon" + phoneme;
         rule.rhs = rhs;
+        rule.context = context;
         ruleList.append (rule);
       }
       
@@ -2714,6 +2721,7 @@ QList<Rule> CDICDatabase::getParsingGrammar ()  {
         Rule rule;
         rule.lhs = "Phon" + phoneme;
         rule.rhs = rhs;
+        rule.context = context;
         ruleList.append (rule);
       }
       
@@ -2725,6 +2733,7 @@ QList<Rule> CDICDatabase::getParsingGrammar ()  {
     Rule rule;
     rule.lhs = "Phon" + phoneme;
     rule.rhs = rhs;
+    rule.context = context;
     ruleList.append (rule);
   }
   
@@ -3612,12 +3621,19 @@ QString CDICDatabase::applyDiacritic (int diacritic, QString old)  {
   QString newText = "";
   
   for (int x = 0; x < old.size (); x++)  {
-    int index = plainChars.indexOf ((QString)old[x]);
+    QString oldChar = (QString)old[x];
+    
+    if (diacriticChars.contains (oldChar))  {
+      int index = diacriticChars.indexOf (oldChar);
+      oldChar = plainChars[index % 12];
+    }
+    
+    int index = plainChars.indexOf (oldChar);
     
     if (index >= 0)
       newText += diacriticChars[diacritic*12 + index];
     
-    else newText += old[x];
+    else newText += oldChar;
   }
   
   return newText;

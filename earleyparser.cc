@@ -36,6 +36,15 @@ void EarleyParser::setRules (QList<Rule> list)  {
       if (!hybrid) nonterminals.append (list[x]);
     }
   }
+/*
+  for (int x = 0; x < nonterminals.size (); x++)
+    printRule (nonterminals[x]);
+  
+  QTextStream terminal (stdout);
+  
+  QMap<QString, QStringList>::const_iterator i;
+  for (i = terminals.constBegin (); i != terminals.constEnd (); i++)
+    terminal << i.key () << ": " << i.value ().join (", ") << endl;*/
 }
 
 void EarleyParser::setIgnored (QString i)  {
@@ -70,11 +79,11 @@ TreeNode EarleyParser::parse (QString input)  {
         QString nextElement = chart[x][y].rhs[chart[x][y].nextElement];
         
         if (preterminals.contains (nextElement) && x < words.size ())
-          runScanner (x, y, words[x]);
+          runScanner (x, y, words[x], ((x+1) < words.size () ? words[x+1] : ""));
         else runPredictor (x, y);
       }
       
-      else runCompleter (x, y);
+      else runCompleter (x, y, (x < words.size () ? words[x] : ""));
     }
   }
   
@@ -101,15 +110,29 @@ TreeNode EarleyParser::parse (QString input)  {
     return tn;
   }
   
-  int bestTree = 0;
-  int bestCount = countCodas (nodeList[0]);
+  QList<int> bestTrees;
+  int bestCodaCount = countCodas (nodeList[0]);
   
   for (int x = 1; x < nodeList.size (); x++)  {
     int codas = countCodas (nodeList[x]);
     
-    if (codas < bestCount)  {
-      bestTree = x;
-      bestCount = codas;
+    if (codas < bestCodaCount)
+      bestCodaCount = codas;
+  }
+  
+  for (int x = 0; x < nodeList.size (); x++)
+    if (countCodas (nodeList[x]) == bestCodaCount)
+      bestTrees.append (x);
+    
+  int bestTree = bestTrees[0];
+  int bestContextCount = countContexts (nodeList[bestTree]);
+  
+  for (int x = 0; x < bestTrees.size (); x++)  {
+    int contexts = countContexts (nodeList[bestTrees[x]]);
+    
+    if (contexts > bestContextCount)  {
+      bestTree = bestTrees[x];
+      bestContextCount = contexts;
     }
   }
   
@@ -139,6 +162,7 @@ TreeNode EarleyParser::getTreeNode (int chartPosition, int itemNum)  {
   ChartItem item = chart[chartPosition][itemNum];
   
   node.label = item.lhs;
+  node.context = (item.context != "");
   
   if (item.backPointers.size () == 0)  {
     QString p = item.rhs[0];
@@ -167,6 +191,15 @@ int EarleyParser::countCodas (TreeNode node)  {
   return count;
 }
 
+int EarleyParser::countContexts (TreeNode node)  {
+  int count = node.context ? 1 : 0;
+  
+  for (int x = 0; x < node.children.size (); x++)
+    count += countContexts (node.children[x]);
+  
+  return count;
+}
+
 void EarleyParser::runPredictor (int chartPosition, int itemNum)  {
   if (chart.size () <= chartPosition) return;
   if (chart[chartPosition].size () <= itemNum) return;
@@ -188,12 +221,16 @@ void EarleyParser::runPredictor (int chartPosition, int itemNum)  {
       newItem.nextElement = 0;
       newItem.start = item.end;
       newItem.end = item.end;
+      newItem.context = nonterminals[x].context;
       
       addChartItem (newItem, item.end);
     }
+    
+//  cout << "Ran predictor" << endl;
+//  printChart ();
 }
 
-void EarleyParser::runScanner (int chartPosition, int itemNum, QString word)  {
+void EarleyParser::runScanner (int chartPosition, int itemNum, QString word, QString next)  {
   if (chart.size () <= chartPosition) return;
   if (chart[chartPosition].size () <= itemNum) return;
   
@@ -208,19 +245,27 @@ void EarleyParser::runScanner (int chartPosition, int itemNum, QString word)  {
   
   QString nextElement = item.rhs[item.nextElement];
   
-  if (terminals[word].contains (nextElement))  {
+//  QTextStream terminal (stdout);
+//  terminal << stringChartItem (item) << endl;
+  
+  if (terminals[word].contains (nextElement) &&
+      (item.context == "" || ("\"" + item.context + "\"") == next))  {
     ChartItem newItem;
     newItem.lhs = nextElement;
     newItem.rhs = QStringList (word);
     newItem.nextElement = 1;
     newItem.start = item.end;
     newItem.end = item.end + 1;
+    newItem.context = "";
     
     addChartItem (newItem, item.end + 1);
   }
+  
+//  cout << "Ran scanner" << endl;
+//  printChart ();
 }
 
-void EarleyParser::runCompleter (int chartPosition, int itemNum)  {
+void EarleyParser::runCompleter (int chartPosition, int itemNum, QString next)  {
   if (chart.size () <= chartPosition) return;
   if (chart[chartPosition].size () <= itemNum) return;
   
@@ -231,6 +276,9 @@ void EarleyParser::runCompleter (int chartPosition, int itemNum)  {
     return;
   }
   
+//  QTextStream terminal (stdout);
+//  terminal << stringChartItem (item) << endl;
+  
   for (int x = 0; x < chart[item.start].size (); x++)  {
     ChartItem checkItem = chart[item.start][x];
     
@@ -239,13 +287,17 @@ void EarleyParser::runCompleter (int chartPosition, int itemNum)  {
     
     QString nextElement = checkItem.rhs[checkItem.nextElement];
     
-    if (nextElement == item.lhs)  {
+//    terminal << stringChartItem (checkItem) << ", " << next << endl;
+    
+    if (nextElement == item.lhs && 
+        (checkItem.context == "" || ("\""+ checkItem.context + "\"") == next))  {      
       ChartItem newItem;
       newItem.lhs = checkItem.lhs;
       newItem.rhs = checkItem.rhs;
       newItem.nextElement = checkItem.nextElement + 1;
       newItem.start = checkItem.start;
       newItem.end = item.end;
+      newItem.context = checkItem.context;
       newItem.backPointers = checkItem.backPointers;
       BackPointer newBackPointer;
       newBackPointer.position = chartPosition;
@@ -255,6 +307,9 @@ void EarleyParser::runCompleter (int chartPosition, int itemNum)  {
       addChartItem (newItem, item.end);
     }
   }
+  
+//  cout << "Ran completer" << endl;
+//  printChart ();
 }
 
 void EarleyParser::printRule (Rule rule)  {
@@ -264,6 +319,9 @@ void EarleyParser::printRule (Rule rule)  {
   
   for (int x = 0; x < rule.rhs.size (); x++)
     terminal << " " << rule.rhs[x];
+  
+  if (rule.context != "")
+    terminal << " | " << rule.context;
   
   terminal << endl;
 }
@@ -296,6 +354,9 @@ QString EarleyParser::stringChartItem (ChartItem item)  {
   if (item.nextElement == item.rhs.size ())
     text += " .";
   
+  if (item.context != "")
+    text += " | " + item.context;
+  
   text += " [" + QString::number (item.start) + ", " + 
           QString::number (item.end) + "]";
           
@@ -314,7 +375,8 @@ void EarleyParser::addChartItem (ChartItem item, int position)  {
     if (item.lhs == chart[position][x].lhs && item.rhs == chart[position][x].rhs
         && item.nextElement == chart[position][x].nextElement 
         && item.start == chart[position][x].start 
-        && item.end == chart[position][x].end)  {
+        && item.end == chart[position][x].end 
+        && item.context == chart[position][x].context)  {
       bool sameBP = true;
     
       if (item.backPointers.size () != chart[position][x].backPointers.size ())

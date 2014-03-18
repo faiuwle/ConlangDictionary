@@ -456,6 +456,7 @@ void WordPage::parseWord (int id)  {
   }
   
   QString word = db.getWordName (id);
+  
   db.setPhonology (id, convertTree (parser.parse (word)));
   
   emit wordParsed ();
