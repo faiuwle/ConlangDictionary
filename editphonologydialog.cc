@@ -17,6 +17,7 @@ EditPhonologyDialog::EditPhonologyDialog (CDICDatabase data, int w)  {
   wordID = w;
   phonology = db.getPhonology (wordID);
   supras = db.getSupras ();
+  currentSyllable = phonology.size () - 1;
   
   QStringList phonNames = db.getAllPhonemeNames ();
   
@@ -52,6 +53,18 @@ EditPhonologyDialog::EditPhonologyDialog (CDICDatabase data, int w)  {
   dotBackClearLayout->addWidget (clearButton);
   dotBackClearLayout->addStretch (1);
   
+  prevSyllableButton = new QPushButton ("Previous Syllable");
+  prevSyllableButton->setMaximumSize (prevSyllableButton->sizeHint ());
+  nextSyllableButton = new QPushButton ("Next Syllable");
+  nextSyllableButton->setMaximumSize (nextSyllableButton->sizeHint ());
+  nextSyllableButton->setEnabled (false);
+  
+  syllableNavigationLayout = new QHBoxLayout;
+  syllableNavigationLayout->addStretch (1);
+  syllableNavigationLayout->addWidget (prevSyllableButton);
+  syllableNavigationLayout->addWidget (nextSyllableButton);
+  syllableNavigationLayout->addStretch (1);
+  
   prevSegmentButton = new QPushButton ("<");
   prevSegmentButton->setMaximumSize (prevSegmentButton->sizeHint ());
   nextSegmentButton = new QPushButton (">");
@@ -72,7 +85,7 @@ EditPhonologyDialog::EditPhonologyDialog (CDICDatabase data, int w)  {
   segmentNavigationLayout->addWidget (nextSegmentButton);
   segmentNavigationLayout->addStretch (1);
   
-  sequenceLabel = new QLabel ("<b>" + getRepresentation () + "</b>");
+  sequenceLabel = new QLabel (getRepresentation ());
   sequenceLabel->setAlignment (Qt::AlignCenter);
   
   applySupraButton = new QPushButton ("Apply Suprasegmental:");
@@ -92,6 +105,7 @@ EditPhonologyDialog::EditPhonologyDialog (CDICDatabase data, int w)  {
   mainLayout = new QVBoxLayout;
   mainLayout->addLayout (phonemeLayout);
   mainLayout->addLayout (dotBackClearLayout);
+  mainLayout->addLayout (syllableNavigationLayout);
   mainLayout->addLayout (segmentNavigationLayout);
   mainLayout->addWidget (sequenceLabel);
   mainLayout->addLayout (applySupraLayout);
@@ -103,6 +117,9 @@ EditPhonologyDialog::EditPhonologyDialog (CDICDatabase data, int w)  {
   
   connect (signalMapper, SIGNAL (mapped (const QString&)), this,
            SLOT (addPhoneme (const QString&)));
+  
+  connect (prevSyllableButton, SIGNAL (clicked ()), this, SLOT (prevSyllable ()));
+  connect (nextSyllableButton, SIGNAL (clicked ()), this, SLOT (nextSyllable ()));
   
   connect (dotButton, SIGNAL (clicked ()), this, SLOT (newSyllable ()));
   connect (backButton, SIGNAL (clicked ()), this, SLOT (goBack ()));
@@ -123,38 +140,77 @@ void EditPhonologyDialog::addPhoneme (const QString &p)  {
   if (phonology.size () == 0)  {
     Syllable s;
     phonology.append (s);
+    currentSyllable = 0;
   }
   
   if (segmentLabel->text () == "Onset")
-    phonology.last ().onset.append (phon);
+    phonology[currentSyllable].onset.append (phon);
   if (segmentLabel->text () == "Peak")
-    phonology.last ().peak.append (phon);
+    phonology[currentSyllable].peak.append (phon);
   if (segmentLabel->text () == "Coda")
-    phonology.last ().coda.append (phon);
+    phonology[currentSyllable].coda.append (phon);
   
-  sequenceLabel->setText ("<b>" + getRepresentation () + "</b>");
+  sequenceLabel->setText (getRepresentation ());
+}
+
+void EditPhonologyDialog::nextSyllable ()  {
+  if (currentSyllable < (phonology.size () - 1))
+    currentSyllable++;
+  if (currentSyllable == phonology.size () - 1)
+    nextSyllableButton->setEnabled (false);
+  if (currentSyllable > 0)
+    prevSyllableButton->setEnabled (true);
+  
+  sequenceLabel->setText (getRepresentation ());
+}
+
+void EditPhonologyDialog::prevSyllable ()  {
+  if (currentSyllable > 0)
+    currentSyllable--;
+  if (currentSyllable == 0)
+    prevSyllableButton->setEnabled (false);
+  if (currentSyllable < (phonology.size () - 1))
+    nextSyllableButton->setEnabled (true);
+  
+  sequenceLabel->setText (getRepresentation ());
 }
     
 void EditPhonologyDialog::newSyllable ()  {
   Syllable s;
   phonology.append (s);
   
-  sequenceLabel->setText ("<b>" + getRepresentation () + "</b>");
+  if (currentSyllable < 0)
+    currentSyllable = 0;
+  
+  if (currentSyllable < (phonology.size () - 1))
+    nextSyllableButton->setEnabled (true);
+  
+  sequenceLabel->setText (getRepresentation ());
 }
     
 void EditPhonologyDialog::goBack ()  {
   if (phonology.size () == 0)
     return;
   
-  if (phonology.last ().coda.size () > 0)
-    phonology.last ().coda.removeLast ();
-  else if (phonology.last ().peak.size () > 0)
-    phonology.last ().peak.removeLast ();
-  else if (phonology.last ().onset.size () > 0)
-    phonology.last ().onset.removeLast ();
-  else phonology.removeLast ();
+  if (phonology[currentSyllable].coda.size () > 0 && 
+      segmentLabel->text () == "Coda")
+    phonology[currentSyllable].coda.removeLast ();
+  else if (phonology[currentSyllable].peak.size () > 0 &&
+           (segmentLabel->text () == "Peak" ||
+            segmentLabel->text () == "Coda"))
+    phonology[currentSyllable].peak.removeLast ();
+  else if (phonology[currentSyllable].onset.size () > 0)
+    phonology[currentSyllable].onset.removeLast ();
+  else phonology.removeAt (currentSyllable);
   
-  sequenceLabel->setText ("<b>" + getRepresentation () + "</b>");
+  if (currentSyllable == phonology.size ())
+    currentSyllable = phonology.size () - 1;
+  if (currentSyllable == (phonology.size () - 1))
+    nextSyllableButton->setEnabled (false);
+  if (currentSyllable == 0)
+    prevSyllableButton->setEnabled (false);
+  
+  sequenceLabel->setText (getRepresentation ());
 }
     
 void EditPhonologyDialog::clear ()  {
@@ -195,18 +251,18 @@ void EditPhonologyDialog::applySupra ()  {
   QString seg = segmentLabel->text ();
   
   if (supras[s].domain == SUPRA_DOMAIN_SYLL)
-    phonology.last ().supras.append (n);
+    phonology[currentSyllable].supras.append (n);
   
-  else if (phonology.last ().coda.size () > 0 && seg == "Coda")
-    phonology.last ().coda.last ().supras.append (n);
+  else if (phonology[currentSyllable].coda.size () > 0 && seg == "Coda")
+    phonology[currentSyllable].coda.last ().supras.append (n);
   
-  else if (phonology.last ().peak.size () > 0 && seg == "Peak")
-    phonology.last ().peak.last ().supras.append (n);
+  else if (phonology[currentSyllable].peak.size () > 0 && seg == "Peak")
+    phonology[currentSyllable].peak.last ().supras.append (n);
   
-  else if (phonology.last ().onset.size () > 0 && seg == "Onset")
-    phonology.last ().onset.last ().supras.append (n);
+  else if (phonology[currentSyllable].onset.size () > 0 && seg == "Onset")
+    phonology[currentSyllable].onset.last ().supras.append (n);
   
-  sequenceLabel->setText ("<b>" + getRepresentation () + "</b>");
+  sequenceLabel->setText (getRepresentation ());
 }
 
 void EditPhonologyDialog::submit ()  {
@@ -219,6 +275,9 @@ QString EditPhonologyDialog::getRepresentation ()  {
   QString text = "";
   
   for (int x = 0; x < phonology.size (); x++)  {
+    if (currentSyllable == x)
+      text += "<b>";
+    
     QList<Suprasegmental> syllSupraList;
     
     for (int s = 0; s < supras.size (); s++)
@@ -328,6 +387,9 @@ QString EditPhonologyDialog::getRepresentation ()  {
       if (syllSupraList[s].type == TYPE_AFTER)
         text += syllSupraList[s].text;
       
+    if (currentSyllable == x)
+      text += "</b>";
+     
     if (x < (phonology.size () - 1))
       text += ".";
   }

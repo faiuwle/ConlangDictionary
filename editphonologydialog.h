@@ -27,6 +27,9 @@ class EditPhonologyDialog : public QDialog  {
   private slots:
     void addPhoneme (const QString&);
     
+    void nextSyllable ();
+    void prevSyllable ();
+    
     void newSyllable ();
     void goBack ();
     void clear ();
@@ -44,6 +47,7 @@ class EditPhonologyDialog : public QDialog  {
     
     QList<Syllable> phonology;
     QList<Suprasegmental> supras;
+    int currentSyllable;
     
     CDICDatabase db;
     int wordID;
@@ -53,6 +57,9 @@ class EditPhonologyDialog : public QDialog  {
     QPushButton *dotButton;
     QPushButton *backButton;
     QPushButton *clearButton;
+    
+    QPushButton *prevSyllableButton;
+    QPushButton *nextSyllableButton;
     
     QPushButton *prevSegmentButton;
     QPushButton *nextSegmentButton;
@@ -67,6 +74,7 @@ class EditPhonologyDialog : public QDialog  {
     
     QGridLayout *phonemeLayout;
     QHBoxLayout *dotBackClearLayout;
+    QHBoxLayout *syllableNavigationLayout;
     QHBoxLayout *segmentNavigationLayout;
     QHBoxLayout *applySupraLayout;
     QVBoxLayout *mainLayout;
