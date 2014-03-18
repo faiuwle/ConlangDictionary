@@ -338,14 +338,26 @@ void WordPage::submitChanges ()  {
   if (!mapper) return;
   
   QModelIndex index = wordView->selectionModel ()->currentIndex ();
+  int currentID = 1;
+  if (index.isValid ())
+    currentID = wordModel->record (index.row ()).value ("id").toInt ();
   
   mapper->submit ();
   displayModel->submitAll ();
   
   updateModels ();
   
-  if (index.isValid ())
-    wordView->selectionModel ()->setCurrentIndex (index, QItemSelectionModel::Select);
+  QModelIndex newIndex = wordModel->index (0, 0);
+  while (newIndex.isValid ())  {
+    if (wordModel->record (newIndex.row ()).value ("id").toInt () == currentID)
+      break;
+    
+    newIndex = wordModel->index (newIndex.row () + 1, 0);
+  }
+  
+  if (newIndex.isValid ())
+    wordView->selectionModel ()->setCurrentIndex (newIndex, QItemSelectionModel::SelectCurrent |
+                                                            QItemSelectionModel::Rows);
   
   submitButton->setEnabled (false);
 }
@@ -433,9 +445,14 @@ void WordPage::launchEditPhonologyDialog ()  {
 }
 
 void WordPage::parseWord ()  {
-  submitChanges ();
-  int row = wordView->selectionModel ()->currentIndex ().row ();
+  if (!wordView->selectionModel ()->currentIndex ().isValid ())
+    return;
+  
+  QModelIndex index = wordView->selectionModel ()->currentIndex ();
+  int row = index.row ();
   int currentID = wordModel->record (row).value ("id").toInt ();
+  submitChanges ();
+  
   parseWord (currentID);
   displayWord ();
 }

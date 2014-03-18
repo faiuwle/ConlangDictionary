@@ -57,7 +57,7 @@ TreeNode EarleyParser::parse (QString input)  {
   QStringList words;
   
   for (int x = 0; x < input.size (); x++)
-    if (!ignored.contains (input[x]))
+    if (!ignored.contains (input[x]) && input[x] != ' ')
       words.append ("\"" + input[x] + "\"");
   
   QTextStream terminal (stdout);
