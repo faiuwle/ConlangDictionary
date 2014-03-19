@@ -1537,7 +1537,7 @@ void CDICDatabase::setPhonology (int wordID, QList<Syllable> phonology)  {
   
   QSqlQuery query (db);
   
-//  db.transaction ();
+  db.transaction ();
   
   for (int x = 0; x < 7; x++)  {
     QString tableName = "OnsetSupra";
@@ -1684,7 +1684,7 @@ void CDICDatabase::setPhonology (int wordID, QList<Syllable> phonology)  {
     }
   }
   
-//  db.commit ();
+  db.commit ();
 }
      
 QString CDICDatabase::getRepresentation (int wordID)  {
