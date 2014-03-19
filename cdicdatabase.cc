@@ -1685,6 +1685,7 @@ bool CDICDatabase::setPhonology (int wordID, QList<Syllable> phonology)  {
   }
   
 //  db.commit ();
+  return true;
 }
      
 QString CDICDatabase::getRepresentation (int wordID)  {
