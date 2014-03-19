@@ -81,7 +81,7 @@ class CDICDatabase {
     int addWord (QString name, QString definition = "");
     void deleteWord (int);
     void assignNaturalClass (QString, int);
-    void setPhonology (int, QList<Syllable>);
+    bool setPhonology (int, QList<Syllable>);
     QString getRepresentation (int);
     QList<Syllable> getPhonology (int);
     int getNumberOfWords ();

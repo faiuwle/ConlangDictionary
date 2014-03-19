@@ -7,6 +7,10 @@ Version 0.4
 Version 0.3
 + Lexique Pro input and output
 
+3/19/14
+- Fixed bug with word tab for imported XML databases.
+- Made phonology parsing much faster on the phonotactics tab.
+
 3/18/14
 - Fixed bug where searching on the word tab would mess up the display.
 - Now allows contextual spelling representations.

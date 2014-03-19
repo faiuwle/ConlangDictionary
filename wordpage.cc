@@ -242,8 +242,10 @@ void WordPage::setDirty ()  {
 void WordPage::parseWordlist ()  {
   QList<int> idList = db.getAllWordIDs ();
   
+  db.transaction ();
   for (int x = 0; x < idList.size (); x++)
     parseWord (idList[x]);
+  db.commit ();
   
   emit parsingFinished ();
 }

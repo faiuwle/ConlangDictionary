@@ -1532,12 +1532,12 @@ void CDICDatabase::assignNaturalClass (QString className, int wordID)  {
   query.finish ();
 }
 
-void CDICDatabase::setPhonology (int wordID, QList<Syllable> phonology)  {
-  if (!db.isOpen ()) return;
+bool CDICDatabase::setPhonology (int wordID, QList<Syllable> phonology)  {
+  if (!db.isOpen ()) return false;
   
   QSqlQuery query (db);
   
-  db.transaction ();
+//  db.transaction ();
   
   for (int x = 0; x < 7; x++)  {
     QString tableName = "OnsetSupra";
@@ -1554,8 +1554,8 @@ void CDICDatabase::setPhonology (int wordID, QList<Syllable> phonology)  {
     if (!query.exec ())  {
       QUERY_ERROR(query)
       query.finish ();
-      db.rollback ();
-      return;
+//      db.rollback ();
+      return false;
     }
     
     query.finish ();
@@ -1570,15 +1570,15 @@ void CDICDatabase::setPhonology (int wordID, QList<Syllable> phonology)  {
       if (!query.exec ())  {
         QUERY_ERROR(query)
         query.finish ();
-        db.rollback ();
-        return;
+//        db.rollback ();
+        return false;
       }
       
       if (!query.next ())  {
         DATA_ERROR("Could not find suprasegmental " + phonology[syll].supras[sup])
         query.finish ();
-        db.rollback ();
-        return;
+//        db.rollback ();
+        return false;
       }
       
       int supID = query.value (0).toInt ();
@@ -1592,8 +1592,8 @@ void CDICDatabase::setPhonology (int wordID, QList<Syllable> phonology)  {
       if (!query.exec ())  {
         QUERY_ERROR(query)
         query.finish ();
-        db.rollback ();
-        return;
+//        db.rollback ();
+        return false;
       }
       
       query.finish ();
@@ -1615,15 +1615,15 @@ void CDICDatabase::setPhonology (int wordID, QList<Syllable> phonology)  {
         if (!query.exec ())  {
           QUERY_ERROR(query)
           query.finish ();
-          db.rollback ();
-          return;
+//          db.rollback ();
+          return false;
         }
         
         if (!query.next ())  {
           DATA_ERROR("Could not find phoneme " + currList[p].name)
           query.finish ();
-          db.rollback ();
-          return;
+//          db.rollback ();
+          return false;
         }
         
         int pID = query.value (0).toInt ();
@@ -1638,8 +1638,8 @@ void CDICDatabase::setPhonology (int wordID, QList<Syllable> phonology)  {
         if (!query.exec ())  {
           QUERY_ERROR(query)
           query.finish ();
-          db.rollback ();
-          return;
+//          db.rollback ();
+          return false;
         }
         
         query.finish ();
@@ -1651,15 +1651,15 @@ void CDICDatabase::setPhonology (int wordID, QList<Syllable> phonology)  {
           if (!query.exec ())  {
             QUERY_ERROR(query)
             query.finish ();
-            db.rollback ();
-            return;
+//            db.rollback ();
+            return false;
           }
           
           if (!query.next ())  {
             DATA_ERROR("Could not find suprasegmental " + currList[p].supras[s])
             query.finish ();
-            db.rollback ();
-            return;
+//            db.rollback ();
+            return false;
           }
           
           int sID = query.value (0).toInt ();
@@ -1674,8 +1674,8 @@ void CDICDatabase::setPhonology (int wordID, QList<Syllable> phonology)  {
           if (!query.exec ())  {
             QUERY_ERROR(query)
             query.finish ();
-            db.rollback ();
-            return;
+//            db.rollback ();
+            return false;
           }
           
           query.finish ();
@@ -1684,7 +1684,7 @@ void CDICDatabase::setPhonology (int wordID, QList<Syllable> phonology)  {
     }
   }
   
-  db.commit ();
+//  db.commit ();
 }
      
 QString CDICDatabase::getRepresentation (int wordID)  {
