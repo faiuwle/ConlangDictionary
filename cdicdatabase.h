@@ -25,6 +25,9 @@ class CDICDatabase {
     void close ();
     void clear ();
     void clearWordlist ();
+    void transaction ();
+    void rollback ();
+    void commit ();
     
     QString currentDB ();
     

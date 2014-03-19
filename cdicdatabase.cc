@@ -109,6 +109,18 @@ void CDICDatabase::clearWordlist ()  {
   else db.commit ();
 }
 
+void CDICDatabase::transaction ()  {
+  db.transaction ();
+}
+
+void CDICDatabase::rollback ()  {
+  db.rollback ();
+}
+
+void CDICDatabase::commit ()  {
+  db.commit ();
+}
+
 QString CDICDatabase::currentDB ()  {
   if (db.isOpen ()) return db.databaseName ();
   else return "";
@@ -1525,7 +1537,7 @@ void CDICDatabase::setPhonology (int wordID, QList<Syllable> phonology)  {
   
   QSqlQuery query (db);
   
-  db.transaction ();
+//  db.transaction ();
   
   for (int x = 0; x < 7; x++)  {
     QString tableName = "OnsetSupra";
@@ -1672,7 +1684,7 @@ void CDICDatabase::setPhonology (int wordID, QList<Syllable> phonology)  {
     }
   }
   
-  db.commit ();
+//  db.commit ();
 }
      
 QString CDICDatabase::getRepresentation (int wordID)  {
@@ -4287,7 +4299,7 @@ bool CDICDatabase::loadWordList (QDomElement words)  {
     return false;
   
   QDomNodeList nodeList = words.childNodes ();
-  int wordID = 0;
+  int wordID = 1;
   
   for (int x = 0; x < nodeList.size (); x++)  {
     QDomElement currentWord = nodeList.at(x).toElement ();
