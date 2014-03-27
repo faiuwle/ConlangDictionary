@@ -12,6 +12,7 @@ class QSqlQueryModel;
 class QSqlTableModel;
 class EditableQueryModel;
 class QDomElement;
+class MorphemeUpdateDialog;
 
 // This is basically an interface for QSqlDatabase, so that other classes do not
 // have to deal with SQL and queries, and can just call functions of this class.
@@ -28,6 +29,8 @@ class CDICDatabase {
     void transaction ();
     void rollback ();
     void commit ();
+    
+    void updateTo04 ();
     
     QString currentDB ();
     
@@ -153,6 +156,8 @@ class CDICDatabase {
     bool loadSequence (QDomElement, int, int, int);
     bool loadWord (QDomElement, int);
     bool loadWordList (QDomElement);
+    
+    MorphemeUpdateDialog *morphemeUpdateDialog;
 
     QSqlDatabase db;
 };

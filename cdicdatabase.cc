@@ -18,11 +18,13 @@ using namespace std;
 #include "cdicdatabase.h"
 #include "mainwindow.h"
 #include "editablequerymodel.h"
+#include "morphemeupdatedialog.h"
 
 #define QUERY_ERROR(v) QMessageBox::warning (NULL, "Database Error", v.executedQuery () + "\n" + v.lastError ().text ());
 #define DATA_ERROR(m) QMessageBox::warning (NULL, "Database Error", m);
 
 CDICDatabase::CDICDatabase ()  {
+  morphemeUpdateDialog = NULL;
 }
 
 CDICDatabase::CDICDatabase (QString name)  {
@@ -61,6 +63,9 @@ bool CDICDatabase::open (QString name)  {
   }
   
   if (db.isOpen ())  {
+    if (getValue (VERSION_NUMBER) == "0.3")
+      updateTo04 ();
+    
     QSqlQuery query (db);
     
     if (!query.exec ("pragma foreign_keys = ON"))
@@ -119,6 +124,14 @@ void CDICDatabase::rollback ()  {
 
 void CDICDatabase::commit ()  {
   db.commit ();
+}
+
+void CDICDatabase::updateTo04 ()  {
+  if (morphemeUpdateDialog)
+    delete morphemeUpdateDialog;
+  
+  morphemeUpdateDialog = new MorphemeUpdateDialog (QStringList (), QList<int> ());
+  morphemeUpdateDialog->exec ();
 }
 
 QString CDICDatabase::currentDB ()  {
