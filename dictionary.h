@@ -13,6 +13,7 @@ class PhonologyPage;
 class PhonotacticsPage;
 class SuprasegmentalsPage;
 class WordPage;
+class MorphemeUpdateDialog;
 
 class Dictionary : public QTabWidget {
   Q_OBJECT
@@ -40,12 +41,19 @@ class Dictionary : public QTabWidget {
     void languageNameUpdated (QString);
     void bracketsUpdated (bool);
     void unicodeUpdated (bool);
+    
+  private slots:
+    void setMorphemeList (QList<int>);
 
   private:
     void setDB ();
     void updateModels ();
+    
+    void launchMorphemeUpdateDialog ();
 
     CDICDatabase db;
+    
+    MorphemeUpdateDialog *morphemeUpdateDialog;
 
     PhonologyPage *phonologyPage;
     PhonotacticsPage *phonotacticsPage;

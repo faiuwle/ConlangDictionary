@@ -18,13 +18,12 @@ using namespace std;
 #include "cdicdatabase.h"
 #include "mainwindow.h"
 #include "editablequerymodel.h"
-#include "morphemeupdatedialog.h"
 
 #define QUERY_ERROR(v) QMessageBox::warning (NULL, "Database Error", v.executedQuery () + "\n" + v.lastError ().text ());
 #define DATA_ERROR(m) QMessageBox::warning (NULL, "Database Error", m);
 
 CDICDatabase::CDICDatabase ()  {
-  morphemeUpdateDialog = NULL;
+
 }
 
 CDICDatabase::CDICDatabase (QString name)  {
@@ -63,8 +62,11 @@ bool CDICDatabase::open (QString name)  {
   }
   
   if (db.isOpen ())  {
-    if (getValue (VERSION_NUMBER) == "0.3")
-      updateTo04 ();
+    if (getValue (VERSION_NUMBER) == "0.3")  {
+      db.transaction ();
+      readSQLFile ("SQLUpdates/0-4.sql");
+      db.commit ();
+    }
     
     QSqlQuery query (db);
     
@@ -124,14 +126,6 @@ void CDICDatabase::rollback ()  {
 
 void CDICDatabase::commit ()  {
   db.commit ();
-}
-
-void CDICDatabase::updateTo04 ()  {
-  if (morphemeUpdateDialog)
-    delete morphemeUpdateDialog;
-  
-  morphemeUpdateDialog = new MorphemeUpdateDialog (QStringList (), QList<int> ());
-  morphemeUpdateDialog->exec ();
 }
 
 QString CDICDatabase::currentDB ()  {
@@ -2133,6 +2127,166 @@ QString CDICDatabase::getDefinition (int wordID)  {
     def = query.value (0).toString ();
   
   return def;
+}
+
+QMap<int, QString> CDICDatabase::getWordsAndIDs ()  {
+  if (!db.isOpen ()) return QMap<int, QString> ();
+  
+  QMap<int, QString> map;
+  
+  QSqlQuery query (db);
+  query.prepare ("select id, name, classlist from WordPageTable");
+  
+  if (!query.exec ())  {
+    QUERY_ERROR(query)
+    query.finish ();
+    return map;
+  }
+  
+  while (query.next ())  {
+    QString name = query.value (1).toString ();
+    QString classlist = query.value (2).toString ();
+    
+    if (classlist == "")
+      map[query.value (0).toInt ()] = name;
+    else map[query.value (0).toInt ()] = name + " (" + classlist + ")";
+  }
+  
+  query.finish ();
+  
+  return map;
+}
+
+void CDICDatabase::setMorphemeList (QList<int> idList)  {
+  if (!db.isOpen ()) return;
+  
+  db.transaction ();
+  
+  QStringList placeholders;
+  for (int x = 0; x < idList.size (); x++)
+    placeholders.append ("?");
+  
+  QSqlQuery query (db);
+  query.prepare ((QString)"insert into Morpheme " +
+                 "select id, name, definition from Word " +
+                 "where id in (" + placeholders.join (", ") + ")");
+  for (int x = 0; x < idList.size (); x++)
+    query.bindValue (x, idList[x]);
+  
+  if (!query.exec ())  {
+    QUERY_ERROR(query)
+    query.finish ();
+    db.rollback ();
+    return;
+  }
+  
+  query.finish ();
+
+  query.prepare ((QString)"insert into MorphemeSyllableSupra " +
+                 "select wordID, syllNum, supraID from SyllableSupra " +
+                 "where wordID in (" + placeholders.join (", ") + ")");
+  for (int x = 0; x < idList.size (); x++)
+    query.bindValue (x, idList[x]);
+  
+  if (!query.exec ())  {
+    QUERY_ERROR(query)
+    query.finish ();
+    db.rollback ();
+    return;
+  }
+  
+  query.finish ();
+  
+  query.prepare ((QString)"insert into MorphemeOnset " +
+                 "select wordID, syllNum, ind, phonemeID from Onset " +
+                 "where wordID in (" + placeholders.join (", ") + ")");
+  for (int x = 0; x < idList.size (); x++)
+    query.bindValue (x, idList[x]);
+  
+  if (!query.exec ())  {
+    QUERY_ERROR(query)
+    query.finish ();
+    db.rollback ();
+    return;
+  }
+  
+  query.prepare ((QString)"insert into MorphemeOnsetSupra " +
+                 "select wordID, syllNum, ind, supraID from OnsetSupra " +
+                 "where wordID in (" + placeholders.join (", ") + ")");
+  for (int x = 0; x < idList.size (); x++)
+    query.bindValue (x, idList[x]);
+  
+  if (!query.exec ())  {
+    QUERY_ERROR(query)
+    query.finish ();
+    db.rollback ();
+    return;
+  }
+  
+  query.prepare ((QString)"insert into MorphemePeak " +
+                 "select wordID, syllNum, ind, phonemeID from Peak " +
+                 "where wordID in (" + placeholders.join (", ") + ")");
+  for (int x = 0; x < idList.size (); x++)
+    query.bindValue (x, idList[x]);
+  
+  if (!query.exec ())  {
+    QUERY_ERROR(query)
+    query.finish ();
+    db.rollback ();
+    return;
+  }
+  
+  query.prepare ((QString)"insert into MorphemePeakSupra " +
+                 "select wordID, syllNum, ind, supraID from PeakSupra " +
+                 "where wordID in (" + placeholders.join (", ") + ")");
+  for (int x = 0; x < idList.size (); x++)
+    query.bindValue (x, idList[x]);
+  
+  if (!query.exec ())  {
+    QUERY_ERROR(query)
+    query.finish ();
+    db.rollback ();
+    return;
+  }
+  
+  query.prepare ((QString)"insert into MorphemeCoda " +
+                 "select wordID, syllNum, ind, phonemeID from Coda " +
+                 "where wordID in (" + placeholders.join (", ") + ")");
+  for (int x = 0; x < idList.size (); x++)
+    query.bindValue (x, idList[x]);
+  
+  if (!query.exec ())  {
+    QUERY_ERROR(query)
+    query.finish ();
+    db.rollback ();
+    return;
+  }
+  
+  query.prepare ((QString)"insert into MorphemeCodaSupra " +
+                 "select wordID, syllNum, ind, supraID from CodaSupra " +
+                 "where wordID in (" + placeholders.join (", ") + ")");
+  for (int x = 0; x < idList.size (); x++)
+    query.bindValue (x, idList[x]);
+  
+  if (!query.exec ())  {
+    QUERY_ERROR(query)
+    query.finish ();
+    db.rollback ();
+    return;
+  }
+  
+  query.prepare ("delete from Word where id in (" + placeholders.join (", ") + ")");
+  for (int x = 0; x < idList.size (); x++)
+    query.bindValue (x, idList[x]);
+  
+  if (!query.exec ())  {
+    QUERY_ERROR(query)
+    query.finish ();
+    db.rollback ();
+    return;
+  }
+  
+  db.commit ();
 }
 
 QList< QList<QStringList> > CDICDatabase::getPhonotacticSequenceList (int loc)  {

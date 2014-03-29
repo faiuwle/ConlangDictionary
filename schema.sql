@@ -414,7 +414,7 @@ create table MorphemePeakSupra
    foreign key (morphID, syllNum, ind) references MorphemePeak on delete cascade,
    foreign key (supraID) references Suprasegmental(id) on delete cascade);
 
-create table MophemeCoda
+create table MorphemeCoda
   (morphID int not null,
    syllNum int not null,
    ind int not null,

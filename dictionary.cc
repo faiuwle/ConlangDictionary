@@ -15,10 +15,13 @@ using namespace std;
 #include "phonotacticspage.h"
 #include "suprasegmentalspage.h"
 #include "wordpage.h"
+#include "morphemeupdatedialog.h"
 
 Dictionary::Dictionary ()  {
   setMinimumWidth (700);
   setMinimumHeight (550);
+  
+  morphemeUpdateDialog = NULL;
 
   phonologyPage = new PhonologyPage ();
   phonotacticsPage = new PhonotacticsPage;
@@ -60,6 +63,9 @@ void Dictionary::openDB (QString filename)  {
     QMessageBox::warning (this, "", "Could not open database: " + filename);
   
   else  {
+    if (db.getValue ("NeedsMorphemeUpdateDialog") == "true")
+      launchMorphemeUpdateDialog ();
+    
     QString langName = db.getValue (LANGUAGE_NAME);
     
     if (langName.isEmpty ())
@@ -92,6 +98,8 @@ void Dictionary::loadXML (QString filename)  {
     
     emit bracketsUpdated (db.getValue (SQUARE_BRACKETS) == "true");
     emit unicodeUpdated (db.getValue (USE_UNICODE) == "true");
+    
+    launchMorphemeUpdateDialog ();
   }
   
   updateModels ();
@@ -160,6 +168,10 @@ QString Dictionary::getValue (QString key)  {
   return db.getValue (key);
 }
 
+void Dictionary::setMorphemeList (QList<int> list)  {
+  db.setMorphemeList (list);
+}
+
 void Dictionary::setDB ()  {
   phonologyPage->setDB (db);
   suprasegmentalsPage->setDB (db);
@@ -172,4 +184,18 @@ void Dictionary::updateModels ()  {
   suprasegmentalsPage->updateModels ();
   phonotacticsPage->updateModels ();
   wordPage->updateModels ();
+}
+
+void Dictionary::launchMorphemeUpdateDialog ()  {
+  if (morphemeUpdateDialog)
+    delete morphemeUpdateDialog;
+  
+  db.setValue ("NeedsMorphemeUpdateDialog", "false");
+  
+  morphemeUpdateDialog = new MorphemeUpdateDialog (db.getWordsAndIDs ());
+  
+  connect (morphemeUpdateDialog, SIGNAL (done (QList<int>)), this,
+           SLOT (setMorphemeList (QList<int>)));
+  
+  morphemeUpdateDialog->exec ();
 }

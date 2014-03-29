@@ -3,6 +3,7 @@
 
 #include <QSqlDatabase>
 #include <QList>
+#include <QMap>
 
 #include "const.h"
 #include "earleyparser.h"
@@ -12,11 +13,10 @@ class QSqlQueryModel;
 class QSqlTableModel;
 class EditableQueryModel;
 class QDomElement;
-class MorphemeUpdateDialog;
 
 // This is basically an interface for QSqlDatabase, so that other classes do not
 // have to deal with SQL and queries, and can just call functions of this class.
-class CDICDatabase { 
+class CDICDatabase  {
   public:
     CDICDatabase ();
     CDICDatabase (QString);
@@ -29,8 +29,6 @@ class CDICDatabase {
     void transaction ();
     void rollback ();
     void commit ();
-    
-    void updateTo04 ();
     
     QString currentDB ();
     
@@ -90,8 +88,12 @@ class CDICDatabase {
     int getNumberOfWords ();
     void setDefinition (QString, int);
     QString getDefinition (int);
+    QMap<int, QString> getWordsAndIDs ();
     
-    // for word parsing
+    // morphemes
+    void setMorphemeList (QList<int>);
+    
+    // for word and morpheme parsing
     QList< QList<QStringList> > getPhonotacticSequenceList (int);
     QList<Suprasegmental> getDiacriticSupras ();
     QList<Suprasegmental> getBeforeSupras ();
@@ -156,8 +158,6 @@ class CDICDatabase {
     bool loadSequence (QDomElement, int, int, int);
     bool loadWord (QDomElement, int);
     bool loadWordList (QDomElement);
-    
-    MorphemeUpdateDialog *morphemeUpdateDialog;
 
     QSqlDatabase db;
 };
