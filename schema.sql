@@ -566,10 +566,12 @@ create table InflectionalRule
    wordInput int,
    morphemeInput int,
    formInput int,
+   morphemeID int,
    foreign key (formID) references Form(id) on delete cascade,
    foreign key (wordInput) references NaturalClassWord(id) on delete cascade,
    foreign key (morphemeInput) references NaturalClassMorpheme(id) on delete cascade,
-   foreign key (formInput) references Form(id) on delete cascade);
+   foreign key (formInput) references Form(id) on delete cascade,
+   foreign key (morphemeID) references Morpheme(id) on delete set null);
   
 -- InflectionalRules contain a matching sequence for matching input to. A null
 -- classID indicates that the position can have any number of phonemes.

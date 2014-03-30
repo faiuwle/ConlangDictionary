@@ -1,8 +1,9 @@
 Version 0.4
 + New morpheme tab for morphemes.
-  + new SQL schema
-  + update databases of old savefiles
+  - new SQL schema
+  - update databases of old savefiles
   + morpheme page
+  + attach morphemes to words
 
 Version 0.3
 + Lexique Pro input and output
