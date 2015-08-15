@@ -4,6 +4,7 @@ Version 0.4
   - update databases of old savefiles
   + morpheme page
   + attach morphemes to words
+- Fixed a bug in the word parsing.
 
 Version 0.3
 + Lexique Pro input and output

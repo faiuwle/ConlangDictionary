@@ -303,4 +303,6 @@ void ManageFeaturesDialog::updateModels ()  {
   
   db.updateSubfeatureModel (domain, subfeatureListModel, "");
   db.updateSubfeatureModel (domain, subfeatureBoxModel, parentFeatureBox->currentText ());
+  
+  displayTypeBox->clear ();
 }

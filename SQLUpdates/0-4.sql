@@ -190,13 +190,16 @@ create table Form
 create table WordIsForm
   (wordID int not null,
    formID int not null,
-   inputWord int,
-   inputMorpheme int,
+   wordInput int,
+   morphemeInput int,
+   inputType text not null,
    primary key (wordID, formID) on conflict ignore,
    foreign key (wordID) references Word(id) on delete cascade,
    foreign key (formID) references Form(id) on delete cascade,
-   foreign key (inputWord) references Word(id) on delete cascade,
-   foreign key (inputMorpheme) references Morpheme(id) on delete cascade);
+   foreign key (wordInput) references Word(id) on delete cascade,
+   foreign key (morphemeInput) references Morpheme(id) on delete cascade,
+   check ((morphemeInput != null and inputType == "Morpheme") or 
+          (wordInput != null and inputType == "Word")));
   
 create table InflectionalRule
   (id integer primary key not null,
@@ -204,12 +207,16 @@ create table InflectionalRule
    wordInput int,
    morphemeInput int,
    formInput int,
+   inputType text not null,
    morphemeID int,
    foreign key (formID) references Form(id) on delete cascade,
    foreign key (wordInput) references NaturalClassWord(id) on delete cascade,
    foreign key (morphemeInput) references NaturalClassMorpheme(id) on delete cascade,
    foreign key (formInput) references Form(id) on delete cascade,
-   foreign key (morphemeID) references Morpheme(id) on delete set null);
+   foreign key (morphemeID) references Morpheme(id) on delete set null,
+   check ((wordInput != null and inputType == "Word") or
+          (morphemeInput != null and inputType == "Morpheme") or
+          (formInput != null and inputType == "Form")));
   
 -- InflectionalRules contain a matching sequence for matching input to. A null
 -- classID indicates that the position can have any number of phonemes.

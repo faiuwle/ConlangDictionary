@@ -243,8 +243,10 @@ void WordPage::parseWordlist ()  {
   QList<int> idList = db.getAllWordIDs ();
   
   db.transaction ();
-  for (int x = 0; x < idList.size (); x++)
+  for (int x = 0; x < idList.size (); x++)  {
     parseWord (idList[x]);
+    emit wordParsed ();
+  }
   db.commit ();
   
   emit parsingFinished ();
@@ -484,8 +486,6 @@ void WordPage::parseWord (int id)  {
   QString word = db.getWordName (id);
 
   db.setPhonology (id, convertTree (parser.parse (word)));
-
-  emit wordParsed ();
 }
 
 QList<Syllable> WordPage::convertTree (TreeNode node)  {
