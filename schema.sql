@@ -544,10 +544,8 @@ create table Paradigm
 create table Form
   (id integer primary key not null,
    paradigmID int,
-   input int,
    name text not null,
-   foreign key (paradigmID) references Paradigm(id) on delete cascade,
-   foreign key (input) references InputForm(id) on delete cascade);
+   foreign key (paradigmID) references Paradigm(id) on delete cascade);
   
 create table WordIsForm
   (wordID int not null,
@@ -593,10 +591,9 @@ create trigger RuleMatchDelete
 -- RuleMatches have selections deliniated by parentheses.
 create table RuleMatchSelection
   (ruleID int not null,
-   ind int not null,
    starting int not null,
    ending int not null,
-   primary key (ruleID, ind) on conflict replace,
+   primary key (ruleID, starting, ending),
    foreign key (ruleID) references InflectionalRule(id) on delete cascade,
    check (starting <= ending));
   

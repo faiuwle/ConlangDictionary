@@ -2829,14 +2829,18 @@ QList<Rule> CDICDatabase::getParsingGrammar ()  {
           ruleList.append (rule);
         }
         
-        int c = 0;
-        for (; c < currentCombo.size (); c++)
-          if (currentCombo[c] < (sequences[x][c].size () - 1))  {
+        int c = currentCombo.size () + 1;
+        while (c >= 0)  {
+          if (currentCombo[c] < sequences[x][c].size () - 1)  {
             currentCombo[c]++;
             break;
           }
           
-        if (c == currentCombo.size ())
+          currentCombo[c] = 0;
+          c--;
+        }
+
+        if (c < 0)
           break;
       }
     }
