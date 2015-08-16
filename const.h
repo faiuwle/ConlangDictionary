@@ -28,6 +28,7 @@
 // Domain codes for multitudinous database feature functions
 #define PHONEME 0
 #define WORD 1
+#define MORPHEME 2
 
 // Special code for initializing FB dialog as for natural classes
 #define NATURAL_CLASS -1

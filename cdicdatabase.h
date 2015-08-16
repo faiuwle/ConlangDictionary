@@ -93,7 +93,7 @@ class CDICDatabase  {
     // morphemes
     void setMorphemeList (QList<int>);
     
-    // for word and morpheme parsing
+    // for word and rule parsing
     QList< QList<QStringList> > getPhonotacticSequenceList (int);
     QList<Suprasegmental> getDiacriticSupras ();
     QList<Suprasegmental> getBeforeSupras ();

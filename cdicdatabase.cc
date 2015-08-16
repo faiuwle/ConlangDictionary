@@ -266,8 +266,10 @@ bool CDICDatabase::loadFeatures (int domain, QString filename)  {
     return false;
   }
   
+  QString domainName = (domain == PHONEME ? "Phoneme" : (domain == WORD ? "Word" : "Morpheme"));
+  
   if (QMessageBox::warning (NULL, "Load Features", (QString)"This will delete all existing " + 
-                             (domain == PHONEME ? "Phoneme" : "Word") + " features.  Continue?",
+                             domainName + " features.  Continue?",
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::No)
     return false;
   
@@ -276,7 +278,8 @@ bool CDICDatabase::loadFeatures (int domain, QString filename)  {
     
   QSqlQuery query (db);
   
-  QString tableName = (domain == PHONEME ? "FeatureBundlePhon" : "FeatureBundleWord");
+  QString tableName = (domain == PHONEME ? "FeatureBundlePhon" : 
+                       (domain == WORD ? "FeatureBundleWord" : "FeatureBundleMorpheme"));
   
   query.prepare ("delete from " + tableName);
     
@@ -289,7 +292,8 @@ bool CDICDatabase::loadFeatures (int domain, QString filename)  {
     
   query.finish ();
     
-  tableName = (domain == PHONEME ? "NaturalClassPhon" : "NaturalClassWord");
+  tableName = (domain == PHONEME ? "NaturalClassPhon" : 
+               (domain == WORD ? "NaturalClassWord" : "NaturalClassMorpheme"));
     
   query.prepare ("delete from " + tableName);
     
@@ -302,7 +306,8 @@ bool CDICDatabase::loadFeatures (int domain, QString filename)  {
     
   query.finish ();
     
-  tableName = (domain == PHONEME ? "PhonemeSubfeature" : "WordSubfeature");
+  tableName = (domain == PHONEME ? "PhonemeSubfeature" : 
+               (domain == WORD ? "WordSubfeature" : "MorphemeSubfeature"));
     
   query.prepare ("delete from " + tableName);
     
@@ -315,7 +320,8 @@ bool CDICDatabase::loadFeatures (int domain, QString filename)  {
     
   query.finish ();
     
-  tableName = (domain == PHONEME ? "PhonemeFeatureDef" : "WordFeatureDef");
+  tableName = (domain == PHONEME ? "PhonemeFeatureDef" : 
+               (domain == WORD ? "WordFeatureDef" : "MorphemeFeatureDef"));
     
   query.prepare ("delete from " + tableName);
     
@@ -341,7 +347,8 @@ bool CDICDatabase::loadFeatures (int domain, QString filename)  {
   
   QMap< QString, QList<QString> > parentValuePairs;
   
-  tableName = (domain == PHONEME ? "PhonemeFeatureDef" : "WordFeatureDef");
+  tableName = (domain == PHONEME ? "PhonemeFeatureDef" : 
+               (domain == WORD ? "WordFeatureDef" : "MorphemeFeatureDef"));
   
   while (fquery.next ())  {
     query.prepare ("insert into " + tableName + " values (:n, NULL, NULL, :d)");
@@ -372,7 +379,8 @@ bool CDICDatabase::loadFeatures (int domain, QString filename)  {
     return false;
   }
   
-  tableName = (domain == PHONEME ? "PhonemeSubfeature" : "WordSubfeature");
+  tableName = (domain == PHONEME ? "PhonemeSubfeature" : 
+               (domain == WORD ? "WordSubfeature" : "MorphemeSubfeature"));
   
   while (fquery.next ())  {
     query.prepare ("insert into " + tableName + " values (:n, :v)");
@@ -391,7 +399,8 @@ bool CDICDatabase::loadFeatures (int domain, QString filename)  {
   
   QMap< QString, QList<QString> >::const_iterator i = parentValuePairs.begin ();
   while (i != parentValuePairs.constEnd ())  {
-    tableName = (domain == PHONEME ? "PhonemeFeatureDef" : "WordFeatureDef");
+    tableName = (domain == PHONEME ? "PhonemeFeatureDef" : 
+                 (domain == WORD ? "WordFeatureDef" : "MorphemeFeatureDef"));
     
     query.prepare ("update " + tableName + 
                    " set parentName = :pn, parentValue = :pv where name == :n");
@@ -419,7 +428,8 @@ bool CDICDatabase::loadFeatures (int domain, QString filename)  {
     return false;
   }
   
-  tableName = (domain == PHONEME ? "NaturalClassPhon" : "NaturalClassWord");
+  tableName = (domain == PHONEME ? "NaturalClassPhon" : 
+               (domain == WORD ? "NaturalClassWord" : "NaturalClassMorpheme"));
   
   while (fquery.next ())  {
     query.prepare ("insert into " + tableName + " values (:id, :n)");
@@ -446,7 +456,8 @@ bool CDICDatabase::loadFeatures (int domain, QString filename)  {
     return false;
   }
   
-  tableName = (domain == PHONEME ? "FeatureBundlePhon" : "FeatureBundleWord");
+  tableName = (domain == PHONEME ? "FeatureBundlePhon" : 
+               (domain == WORD ? "FeatureBundleWord" : "FeatureBundleMorpheme"));
   
   while (fquery.next ())  {
     query.prepare ("insert into " + tableName + " values (:id, :f, :v)");
@@ -2187,56 +2198,7 @@ void CDICDatabase::setMorphemeList (QList<int> idList)  {
   }
   
   query.finish ();
- 
-  query.prepare ((QString)"insert into MorphemeSyllableSupra " +
-                          "select wordID, syllNum, supraID from SyllableSupra " +
-                          "where wordID in (" + placeholders.join (", ") + ")");
-  for (int x = 0; x < idList.size (); x++)
-    query.bindValue (x, idList[x]);
-  
-  if (!query.exec ())  {
-    QUERY_ERROR(query)
-    query.finish ();
-    db.rollback ();
-    return;
-  }
-  
-  query.finish ();
-  
-  QStringList tableNames = QStringList () << "Onset" << "Peak" << "Coda";
-  
-  for (int table = 0; table < tableNames.size (); table++)  {
-    query.prepare ((QString)"insert into Morpheme" + tableNames[table] + " " +
-                   "select wordID, syllNum, ind, phonemeID from " + tableNames[table] + " " +
-                   "where wordID in (" + placeholders.join (", ") + ")");
-    for (int x = 0; x < idList.size (); x++)
-      query.bindValue (x, idList[x]);
-  
-    if (!query.exec ())  {
-      QUERY_ERROR(query)
-      query.finish ();
-      db.rollback ();
-      return;
-    }
-  
-    query.finish ();
-  
-    query.prepare ((QString)"insert into Morpheme" + tableNames[table] + "Supra " +
-                   "select wordID, syllNum, ind, supraID from " + tableNames[table] + "Supra " +
-                   "where wordID in (" + placeholders.join (", ") + ")");
-    for (int x = 0; x < idList.size (); x++)
-      query.bindValue (x, idList[x]);
-  
-    if (!query.exec ())  {
-      QUERY_ERROR(query)
-      query.finish ();
-      db.rollback ();
-      return;
-    }
-  
-    query.finish ();
-  }
-  
+
   query.prepare ("delete from Word where id in (" + placeholders.join (", ") + ")");
   for (int x = 0; x < idList.size (); x++)
     query.bindValue (x, idList[x]);
@@ -2250,7 +2212,9 @@ void CDICDatabase::setMorphemeList (QList<int> idList)  {
   
   query.finish ();
   
-  tableNames << "SyllableSupra" << "OnsetSupra" << "PeakSupra" << "CodaSupra" << "WordFeatureSet";
+  QStringList tableNames = QStringList () << "Onset" << "Peak" << "Coda" 
+                           << "SyllableSupra" << "OnsetSupra" << "PeakSupra" 
+                           << "CodaSupra" << "WordFeatureSet";
   
   for (int table = 0; table < tableNames.size (); table++)  {
     query.prepare ("delete from " + tableNames[table] + " where wordID in (" + placeholders.join (", ") + ")");
@@ -2971,7 +2935,8 @@ QList<Rule> CDICDatabase::getParsingGrammar ()  {
 EditableQueryModel *CDICDatabase::getFeatureListModel (int domain, int type)  {
   if (!db.isOpen ()) return NULL;
   
-  QString tableName = (domain == WORD) ? "WordFeatureDef" : "PhonemeFeatureDef";
+  QString tableName = (domain == WORD ? "WordFeatureDef" : 
+                       (domain == PHONEME ? "PhonemeFeatureDef" : "MorphemeFeatureDef"));
   
   EditableQueryModel *model = new EditableQueryModel (NULL);
   filterFeatureModel (domain, model, type);
@@ -2982,8 +2947,10 @@ EditableQueryModel *CDICDatabase::getFeatureListModel (int domain, int type)  {
 void CDICDatabase::filterFeatureModel (int domain, EditableQueryModel *model, int type)  {
   if (!db.isOpen ()) return;
 
-  QString defTable = (domain == WORD) ? "WordFeatureDef" : "PhonemeFeatureDef";
-  QString subTable = (domain == WORD) ? "WordSubfeature" : "PhonemeSubfeature";
+  QString defTable = (domain == WORD ? "WordFeatureDef" : 
+                      (domain == PHONEME ? "PhonemeFeatureDef" : "MorphemeFeatureDef"));
+  QString subTable = (domain == WORD ? "WordSubfeature" : 
+                      (domain == PHONEME ? "PhonemeSubfeature" : "MorphemeSubfeature"));
   
   QSqlQuery query (db);
   
@@ -3041,7 +3008,8 @@ void CDICDatabase::updateSubfeatureModel (int domain, EditableQueryModel *model,
                                           QString feat)  {
   if (!db.isOpen () || !model) return;
   
-  QString tableName = (domain == WORD) ? "WordSubfeature" : "PhonemeSubfeature";
+  QString tableName = (domain == WORD ? "WordSubfeature" : 
+                       (domain == PHONEME ? "PhonemeSubfeature" : "MorphemeSubfeature"));
   
   QSqlQuery query (db);
   
@@ -3068,7 +3036,9 @@ EditableQueryModel *CDICDatabase::getNaturalClassModel (int domain)  {
   
   if (domain == WORD)
     model->setQuery ("select name from NaturalClassWord", db);
-  else model->setQuery ("select name from NaturalClassPhon where bundleID > 0", db);
+  else if (domain == MORPHEME)
+    model->setQuery ("select name from NaturalClassMorpheme", db);
+  else model->setQuery ("select name from NaturalClassPhon", db);
   
   return model;
 }
@@ -3076,9 +3046,12 @@ EditableQueryModel *CDICDatabase::getNaturalClassModel (int domain)  {
 QStringList CDICDatabase::getBundledFeatures (int domain, QString className)  {
   if (!db.isOpen ()) return QStringList ();
   
-  QString ncTable = (domain == WORD) ? "NaturalClassWord" : "NaturalClassPhon";
-  QString featTable = (domain == WORD) ? "WordFeatureDef" : "PhonemeFeatureDef";
-  QString bundleTable = (domain == WORD) ? "FeatureBundleWord" : "FeatureBundlePhon";
+  QString ncTable = (domain == WORD ? "NaturalClassWord" : 
+                     (domain == PHONEME ? "NaturalClassPhon" : "NaturalClassMorpheme"));
+  QString featTable = (domain == WORD ? "WordFeatureDef" : 
+                       (domain == PHONEME ? "PhonemeFeatureDef" : "MorphemeFeatureDef"));
+  QString bundleTable = (domain == WORD ? "FeatureBundleWord" : 
+                         (domain == PHONEME ? "FeatureBundlePhon" : "FeatureBundleMorpheme"));
   
   QSqlQuery query (db);
   query.prepare ((QString)"select feature, value, displayType "  +
@@ -3120,9 +3093,12 @@ QStringList CDICDatabase::getBundledFeatures (int domain, QString className)  {
 QStringList CDICDatabase::getBundledFeatures (int domain, int id)  {
   if (!db.isOpen ()) return QStringList ();
   
-  QString setTable = (domain == WORD) ? "WordFeatureSet" : "PhonemeFeatureSet";
-  QString defTable = (domain == WORD) ? "WordFeatureDef" : "PhonemeFeatureDef";
-  QString idName = (domain == WORD) ? "wordID" : "phonemeID";
+  QString setTable = (domain == WORD ? "WordFeatureSet" : 
+                      (domain == PHONEME ? "PhonemeFeatureSet" : "MorphemeFeatureSet"));
+  QString defTable = (domain == WORD ? "WordFeatureDef" : 
+                      (domain == PHONEME ? "PhonemeFeatureDef" : "MorphemeFeatureDef"));
+  QString idName = (domain == WORD ? "wordID" :
+                    (domain == PHONEME ? "phonemeID" : "morphID"));
   
   QSqlQuery query (db);
   query.prepare ((QString)"select feature, value, displayType " +
@@ -3164,7 +3140,8 @@ void CDICDatabase::addFeature (int domain, QStringList featList, QStringList sub
   if (!db.isOpen ()) return;
   if (!featList.size ()) return;
   
-  QString tableName = (domain == WORD) ? "WordFeatureDef" : "PhonemeFeatureDef";
+  QString tableName = (domain == WORD ? "WordFeatureDef" : 
+                       (domain == PHONEME ? "PhonemeFeatureDef" : "MorphemeFeatureDef"));
   
   QString display = displayType[DISPLAY_COLON];
   if (sub.size () == 1 && sub.contains ("")) 
@@ -3176,7 +3153,6 @@ void CDICDatabase::addFeature (int domain, QStringList featList, QStringList sub
   
   for (int f = 0; f < featList.size (); f++)  {
     db.transaction ();
-    tableName = (domain == WORD) ? "WordFeatureDef" : "PhonemeFeatureDef";
   
     query.prepare ("insert into " + tableName + " values (:name, null, null, :disp)");
     query.bindValue (":name", featList[f]);
@@ -3191,7 +3167,8 @@ void CDICDatabase::addFeature (int domain, QStringList featList, QStringList sub
   
     query.finish ();
   
-    tableName = (domain == WORD) ? "WordSubfeature" : "PhonemeSubfeature";
+    tableName = (domain == WORD ? "WordSubfeature" : 
+                 (domain == PHONEME ? "PhonemeSubfeature" : "MorphemeSubfeature"));
   
     for (int s = 0; s < sub.size (); s++)  {
       query.prepare ("insert into " + tableName + " values (:name, :value)");
@@ -3216,7 +3193,8 @@ void CDICDatabase::deleteFeature (int domain, QStringList featList)  {
   if (!db.isOpen ()) return;
   if (!featList.size ()) return;
   
-  QString tableName = (domain == WORD) ? "WordFeatureDef" : "PhonemeFeatureDef";
+  QString tableName = (domain == WORD ? "WordFeatureDef" : 
+                       (domain == PHONEME ? "PhonemeFeatureDef" : "MorphemeFeatureDef"));
   
   QStringList placeholders;
   for (int x = 0; x < featList.size (); x++)
@@ -3238,7 +3216,8 @@ void CDICDatabase::addSubfeature (int domain, QString feat, QStringList subList)
   if (!db.isOpen ()) return;
   if (!subList.size ()) return;
   
-  QString tableName = (domain == WORD) ? "WordFeatureDef" : "PhonemeFeatureDef";
+  QString tableName = (domain == WORD ? "WordFeatureDef" : 
+                       (domain == PHONEME ? "PhonemeFeatureDef" : "MorphemeFeatureDef"));
   
   QSqlQuery query (db);
   query.prepare ("select name from " + tableName + " where name == :name");
@@ -3256,7 +3235,8 @@ void CDICDatabase::addSubfeature (int domain, QString feat, QStringList subList)
     return;
   }
   
-  tableName = (domain == WORD) ? "WordSubfeature" : "PhonemeSubfeature";
+  tableName = (domain == WORD ? "WordSubfeature" : 
+               (domain == PHONEME ? "PhonemeSubfeature" : "MorphemeSubfeature"));
   
   for (int s = 0; s < subList.size (); s++)  {
     query.prepare ("insert into " + tableName + " values (:name, :value)");
@@ -3274,7 +3254,8 @@ void CDICDatabase::deleteSubfeature (int domain, QString feat, QStringList subLi
   if (!db.isOpen ()) return;
   if (!subList.size ()) return;
   
-  QString tableName = (domain == WORD) ? "WordSubfeature" : "PhonemeSubfeature";
+  QString tableName = (domain == WORD ? "WordSubfeature" : 
+                       (domain == PHONEME ? "PhonemeSubfeature" : "MorphemeSubfeature"));
   
   QStringList placeholders;
   for (int x = 0; x < subList.size (); x++)
@@ -3297,7 +3278,8 @@ void CDICDatabase::renameFeature (int domain, QString before, QString after)  {
   if (!db.isOpen ()) return;
   if (before == after) return;
   
-  QString tableName = (domain == WORD) ? "WordFeatureDef" : "PhonemeFeatureDef";
+  QString tableName = (domain == WORD ? "WordFeatureDef" : 
+                       (domain == PHONEME ? "PhonemeFeatureDef" : "MorphemeFeatureDef"));
   
   QSqlQuery query (db);
   query.prepare ("select name from " + tableName + " where name == :n");
@@ -3331,7 +3313,8 @@ void CDICDatabase::renameSubfeature (int domain, QString feat, QString before, Q
   if (!db.isOpen ()) return;
   if (before == after) return;
   
-  QString tableName = (domain == WORD) ? "WordSubfeature" : "PhonemeSubfeature";
+  QString tableName = (domain == WORD ? "WordSubfeature" : 
+                       (domain == PHONEME ? "PhonemeSubfeature" : "MorphemeSubfeature"));
   
   QSqlQuery query (db);
   query.prepare ("select name from " + tableName + " where name == :f and value == :s");
@@ -3367,7 +3350,8 @@ void CDICDatabase::setDisplay (int domain, QString feat, int disp)  {
   if (!db.isOpen ()) return;
   if (disp < 0 || disp >= displayType.size ()) return;
   
-  QString tableName = (domain == WORD) ? "WordFeatureDef" : "PhonemeFeatureDef";
+  QString tableName = (domain == WORD ? "WordFeatureDef" : 
+                       (domain == PHONEME ? "PhonemeFeatureDef" : "MorphemeFeatureDef"));
   
   QSqlQuery query (db);
   query.prepare ("select name from " + tableName + " where name == :name");
@@ -3400,7 +3384,8 @@ void CDICDatabase::setFeatureParent (int domain, QString feat, QString parent,
                                      QString parentSub)  {
   if (!db.isOpen ()) return;
   
-  QString tableName = (domain == WORD) ? "WordFeatureDef" : "PhonemeFeatureDef";
+  QString tableName = (domain == WORD ? "WordFeatureDef" : 
+                       (domain == PHONEME ? "PhonemeFeatureDef" : "MorphemeFeatureDef"));
   
   QSqlQuery query (db);
   query.prepare ("update " + tableName + " set parentName = :n, parentValue = :v"
@@ -3418,7 +3403,8 @@ void CDICDatabase::setFeatureParent (int domain, QString feat, QString parent,
 QString CDICDatabase::getParent (int domain, QString feat)  {
   if (!db.isOpen ()) return "";
   
-  QString tableName = (domain == WORD) ? "WordFeatureDef" : "PhonemeFeatureDef";
+  QString tableName = (domain == WORD ? "WordFeatureDef" : 
+                       (domain == PHONEME ? "PhonemeFeatureDef" : "MorphemeFeatureDef"));
   
   QSqlQuery query (db);
   query.prepare ("select parentName, parentValue from " + tableName + 
@@ -3482,7 +3468,8 @@ QStringList CDICDatabase::getDisplayType (int domain, QString feat)  {
   if (!db.isOpen ()) return QStringList ();
   
   QStringList displayList;
-  QString tableName = (domain == WORD) ? "WordSubfeature" : "PhonemeSubfeature";
+  QString tableName = (domain == WORD ? "WordSubfeature" : 
+                       (domain == PHONEME ? "PhonemeSubfeature" : "MorphemeSubfeature"));
   
   QSqlQuery query (db);
   query.prepare ("select value from " + tableName + " where name == :n");
@@ -3538,7 +3525,8 @@ void CDICDatabase::addNaturalClass (int domain, QString className)  {
   if (!db.isOpen () || className == "") 
     return;
   
-  QString tableName = (domain == WORD) ? "NaturalClassWord" : "NaturalClassPhon";
+  QString tableName = (domain == WORD ? "NaturalClassWord" : 
+                       (domain == PHONEME ? "NaturalClassPhon" : "NaturalClassMorpheme"));
   
   QSqlQuery query (db);
   query.prepare ("select name from " + tableName + " where name == :n");
@@ -3571,7 +3559,8 @@ void CDICDatabase::deleteNaturalClass (int domain, QStringList classList)  {
   if (!db.open () || !classList.size ()) 
     return;
   
-  QString tableName = (domain == WORD) ? "NaturalClassWord" : "NaturalClassPhon";
+  QString tableName = (domain == WORD ? "NaturalClassWord" : 
+                       (domain == PHONEME ? "NaturalClassPhon" : "NaturalClassMorpheme"));
   
   QSqlQuery query (db);
   
@@ -3590,7 +3579,8 @@ void CDICDatabase::renameNaturalClass (int domain, QString before, QString after
   if (!db.isOpen () || before == "" || after == "")
     return;
   
-  QString tableName = (domain == WORD) ? "NaturalClassWord" : "NaturalClassPhon";
+  QString tableName = (domain == WORD ? "NaturalClassWord" : 
+                       (domain == PHONEME ? "NaturalClassPhon" : "NaturalClassMorpheme"));
   
   QSqlQuery query (db);
   query.prepare ("select name from " + tableName + " where name == :n");
@@ -3623,8 +3613,10 @@ void CDICDatabase::addFeatureToClass (int domain, QString cName, QString feat, Q
   if (!db.isOpen () || cName == "" || feat == "") 
     return;
   
-  QString classTable = (domain == WORD) ? "NaturalClassWord" : "NaturalClassPhon";
-  QString bundleTable = (domain == WORD) ? "FeatureBundleWord" : "FeatureBundlePhon";
+  QString classTable = (domain == WORD ? "NaturalClassWord" : 
+                        (domain == PHONEME ? "NaturalClassPhon" : "NaturalClassMorpheme"));
+  QString bundleTable = (domain == WORD ? "FeatureBundleWord" : 
+                         (domain == PHONEME ? "FeatureBundlePhon" : "FeatureBundleMorpheme"));
   
   QSqlQuery query (db);
   query.prepare ("select bundleID from " + classTable + " where name == :n");
@@ -3660,7 +3652,8 @@ void CDICDatabase::addFeatureToSet (int domain, int id, QString feat, QString su
   if (!db.isOpen () || feat == "") 
     return;
   
-  QString tableName = (domain == WORD) ? "WordFeatureSet" : "PhonemeFeatureSet";
+  QString tableName = (domain == WORD ? "WordFeatureSet" : 
+                       (domain == PHONEME ? "PhonemeFeatureSet" : "MorphemeFeatureSet"));
   
   QSqlQuery query (db);
   query.prepare ("insert into " + tableName + " values (:id, :feat, :val)");
@@ -3678,8 +3671,10 @@ void CDICDatabase::removeFeatureFromClass (int domain, QString className, QStrin
   if (!db.isOpen () || className == "" || feat == "") 
     return;
   
-  QString classTable = (domain == WORD) ? "NaturalClassWord" : "NaturalClassPhon";
-  QString bundleTable = (domain == WORD) ? "FeatureBundleWord" : "FeatureBundlePhon";
+  QString classTable = (domain == WORD ? "NaturalClassWord" : 
+                        (domain == PHONEME ? "NaturalClassPhon" : "NaturalClassMorpheme"));
+  QString bundleTable = (domain == WORD ? "FeatureBundleWord" : 
+                         (domain == PHONEME ? "FeatureBundlePhon" : "FeatureBundleMorpheme"));
   
   QSqlQuery query (db);
   query.prepare ("select bundleID from " + classTable + " where name == :n");
@@ -3714,8 +3709,10 @@ void CDICDatabase::removeFeatureFromSet (int domain, int id, QString feat)  {
   if (!db.isOpen () || feat == "") 
     return;
   
-  QString tableName = (domain == WORD) ? "WordFeatureSet" : "PhonemeFeatureSet";
-  QString idName = (domain == WORD) ? "wordID" : "phonemeID";
+  QString tableName = (domain == WORD ? "WordFeatureSet" : 
+                       (domain == PHONEME ? "PhonemeFeatureSet" : "MorphemeFeatureSet"));
+  QString idName = (domain == WORD ? "wordID" : 
+                    (domain == PHONEME ? "phonemeID" : "morphID"));
   
   QSqlQuery query (db);
   query.prepare ("delete from " + tableName + 
@@ -3733,8 +3730,10 @@ void CDICDatabase::clearClass (int domain, QString className)  {
   if (!db.isOpen () || className == "") 
     return;
   
-  QString classTable = (domain == WORD) ? "NaturalClassWord" : "NaturalClassPhon";
-  QString bundleTable = (domain == WORD) ? "FeatureBundleWord" : "FeatureBundlePhon";
+  QString classTable = (domain == WORD ? "NaturalClassWord" : 
+                        (domain == PHONEME ? "NaturalClassPhon" : "NaturalClassMorpheme"));
+  QString bundleTable = (domain == WORD ? "FeatureBundleWord" : 
+                         (domain == PHONEME ? "FeatureBundlePhon" : "FeatureBundleMorpheme"));
   
   QSqlQuery query (db);
   query.prepare ("select bundleID from " + className + "where name == :n");
@@ -3766,8 +3765,10 @@ void CDICDatabase::clearClass (int domain, QString className)  {
 void CDICDatabase::clearSet (int domain, int id)  {
   if (!db.isOpen ()) return;
   
-  QString tableName = (domain == WORD) ? "WordFeatureSet" : "PhonemeFeatureSet";
-  QString idName = (domain == WORD) ? "wordID" : "phonemeID";
+  QString tableName = (domain == WORD ? "WordFeatureSet" : 
+                       (domain == PHONEME ? "PhonemeFeatureSet" : "MorphemeFeatureSet"));
+  QString idName = (domain == WORD ? "wordID" : 
+                    (domain == PHONEME ? "phonemeID" : "morphID"));
   
   QSqlQuery query (db);
   query.prepare ("delete from " + tableName + " where " + idName + " == :id");
@@ -3782,7 +3783,8 @@ void CDICDatabase::clearSet (int domain, int id)  {
 QStringList CDICDatabase::getClassList (int domain)  {
   if (!db.isOpen ()) return QStringList ();
   
-  QString tableName = (domain == WORD) ? "NaturalClassWord" : "NaturalClassPhon";
+  QString tableName = (domain == WORD ? "NaturalClassWord" : 
+                       (domain == PHONEME ? "NaturalClassPhon" : "NaturalClassMorpheme"));
   
   QSqlQuery query (db);
   query.prepare ("select name from " + tableName);
@@ -3804,7 +3806,8 @@ QStringList CDICDatabase::getClassList (int domain)  {
 QStringList  CDICDatabase::getClassList (int domain, int id)  {
   if (!db.isOpen ()) return QStringList ();
   
-  QString viewName = (domain == WORD) ? "WordClassList" : "PhonClassList";
+  QString viewName = (domain == WORD ? "WordClassList" : 
+                      (domain == PHONEME ? "PhonClassList" : "MorphemeClassList"));
   
   QSqlQuery query (db);
   query.prepare ("select class from " + viewName + " where id == :id");

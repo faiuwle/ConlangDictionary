@@ -1,7 +1,9 @@
 -- Special Note: Don't mess with this file; in particular, all the SQL statements
 -- must have a blank line after them, or my rather stupid parsing loop will barf.
 
--- Statements for clearing the wordlist only:
+-- Statements for clearing the wordlist and morpheme list only:
+
+delete from Morpheme;
 
 delete from CodaSupra;
 

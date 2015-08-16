@@ -3,6 +3,48 @@
 
 -- Statements for clearing the database:
 
+delete from RuleReference;
+
+delete from RuleCodaSupra;
+
+delete from RuleCoda;
+
+delete from RulePeakSupra;
+
+delete from RulePeak;
+
+delete from RuleOnsetSupra;
+
+delete from RuleOnset;
+
+delete from RuleSyllableSupra;
+
+delete from RuleMatchSelection;
+
+delete from RuleMatch;
+
+delete from InflectionalRule;
+
+delete from WordIsForm;
+
+delete from Form;
+
+delete from Paradigm;
+
+delete from HasMorpheme;
+
+delete from FeatureBundleMorpheme;
+
+delete from NaturalClassMorpheme;
+
+delete from MorphemeFeatureSet;
+
+delete from MorphemeSubfeature;
+
+delete from MorphemeFeatureDef;
+
+delete from Morpheme;
+
 delete from FeatureBundleWord;
 
 delete from NaturalClassWord;
